@@ -1,0 +1,33 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+echo "Running mandatory privacy and writing checks before push..."
+
+zero_oid=0000000000000000000000000000000000000000
+checked_any=false
+
+while read -r local_ref local_oid remote_ref remote_oid; do
+    # A zero local object ID means the operation only deletes a remote ref.
+    if [ "$local_oid" = "$zero_oid" ]; then
+        continue
+    fi
+
+    if [ "$remote_oid" = "$zero_oid" ]; then
+        commits=$(git rev-list "$local_oid" --not --remotes)
+    else
+        commits=$(git rev-list "$remote_oid..$local_oid")
+    fi
+
+    for commit in $commits; do
+        echo "Checking outgoing commit $commit..."
+        ./scripts/preflight.sh --revision "$commit"
+        checked_any=true
+    done
+done
+
+if [ "$checked_any" = false ]; then
+    echo "No new commit snapshots require publication checks."
+fi

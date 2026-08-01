@@ -1,9 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The public website of Jeff Kline.">
+    <title>Jeff Kline</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            margin: 0;
+            place-items: center;
+            background: #f5f1e8;
+            color: #152238;
+        }
+
+        main {
+            width: min(44rem, calc(100% - 3rem));
+        }
+
+        h1 {
+            max-width: 12ch;
+            margin: 0;
+            font-size: clamp(3rem, 11vw, 7rem);
+            line-height: 0.92;
+            letter-spacing: -0.055em;
+        }
+
+        p {
+            max-width: 34rem;
+            margin: 2rem 0 0;
+            font: 1.1rem/1.65 system-ui, sans-serif;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #111722;
+                color: #f3ead8;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World! Welcome to my GitHub Pages site.</h1>
+    <main>
+        <h1>Jeff Kline</h1>
+        <p>A home for selected work, ideas, and projects.</p>
+    </main>
 </body>
 </html>

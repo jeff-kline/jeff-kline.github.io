@@ -1,0 +1,19 @@
+name: Publication checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: Privacy and writing review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run mandatory checks
+        run: ./scripts/preflight.sh
