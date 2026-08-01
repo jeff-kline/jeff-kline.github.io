@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Jeff Kline's public standard for AI-assisted mathematical research, including the uniform contents and admission checklist for published results.">
+    <title>A Public Standard for This Work | Experimental Mathematics</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --paper: #f7f2e9;
+            --ink: #26352e;
+            --ink-soft: #526157;
+            --line: #c8c2b2;
+            --red-deep: #8f392f;
+            --green: #6f7d68;
+            --white: #fffdf8;
+            --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --serif: Georgia, "Times New Roman", serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-width: 18rem;
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        a {
+            color: var(--red-deep);
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.2em;
+        }
+
+        a:hover,
+        a:focus-visible {
+            color: var(--ink);
+        }
+
+        .shell {
+            width: min(48rem, calc(100% - 3rem));
+            margin: 0 auto;
+        }
+
+        .site-header {
+            padding: 1.2rem 0 1rem;
+            border-bottom: 1px solid var(--ink);
+            font-family: var(--sans);
+        }
+
+        .wordmark {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: var(--ink);
+            font-size: 0.73rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .wordmark-divider {
+            width: 0.38rem;
+            height: 0.38rem;
+            flex: 0 0 auto;
+            background: var(--red-deep);
+        }
+
+        main {
+            display: block;
+        }
+
+        article {
+            padding: clamp(3rem, 8vw, 6rem) 0 5rem;
+        }
+
+        .kicker {
+            margin: 0 0 1rem;
+            color: var(--red-deep);
+            font: 800 0.7rem/1.2 var(--sans);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 13ch;
+            margin: 0;
+            font: 700 clamp(3rem, 9vw, 5.8rem)/0.96 var(--sans);
+            letter-spacing: -0.055em;
+        }
+
+        .dek {
+            max-width: 38rem;
+            margin: 1.6rem 0 1.2rem;
+            color: var(--ink-soft);
+            font: 500 clamp(1.1rem, 3vw, 1.35rem)/1.5 var(--sans);
+        }
+
+        .document-meta {
+            margin: 0 0 3.5rem;
+            color: var(--ink-soft);
+            font: 700 0.68rem/1.4 var(--sans);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .article-body {
+            font: 1.06rem/1.72 var(--serif);
+        }
+
+        .article-body p {
+            margin: 0 0 1.4rem;
+        }
+
+        .article-body > p:first-child::first-letter {
+            float: left;
+            margin: 0.08em 0.08em 0 0;
+            color: var(--red-deep);
+            font: 700 4.1rem/0.8 var(--serif);
+        }
+
+        .article-body section {
+            margin-top: 3.8rem;
+        }
+
+        .article-body h2 {
+            margin: 0 0 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--ink);
+            font: 750 clamp(1.5rem, 4vw, 2.15rem)/1.12 var(--sans);
+            letter-spacing: -0.025em;
+        }
+
+        .article-body h3 {
+            margin: 2rem 0 0.75rem;
+            color: var(--red-deep);
+            font: 800 0.72rem/1.3 var(--sans);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .short-form {
+            margin: 2.5rem 0;
+            padding: 1.35rem 1.5rem;
+            border-left: 0.28rem solid var(--red-deep);
+            background: color-mix(in srgb, var(--white) 70%, transparent);
+        }
+
+        .short-form p {
+            margin: 0;
+            font: 650 1.02rem/1.55 var(--sans);
+        }
+
+        .contract-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.8rem;
+            margin: 1.8rem 0 0;
+            padding: 0;
+            counter-reset: contract;
+            list-style: none;
+        }
+
+        .contract-list li {
+            min-height: 9rem;
+            padding: 1.15rem;
+            border: 1px solid var(--line);
+            background: color-mix(in srgb, var(--white) 55%, transparent);
+            counter-increment: contract;
+        }
+
+        .contract-list li::before {
+            display: block;
+            margin-bottom: 0.55rem;
+            color: var(--red-deep);
+            content: counter(contract, decimal-leading-zero);
+            font: 800 0.66rem/1 var(--sans);
+            letter-spacing: 0.1em;
+        }
+
+        .contract-list strong {
+            display: block;
+            margin-bottom: 0.3rem;
+            font: 750 0.9rem/1.3 var(--sans);
+        }
+
+        .contract-list span {
+            display: block;
+            color: var(--ink-soft);
+            font: 0.86rem/1.5 var(--sans);
+        }
+
+        .checklist {
+            display: grid;
+            gap: 0.7rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .checklist li {
+            position: relative;
+            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            border-bottom: 1px solid var(--line);
+            font-size: 0.98rem;
+            line-height: 1.55;
+        }
+
+        .checklist li::before {
+            position: absolute;
+            top: 0.9rem;
+            left: 0.55rem;
+            width: 1.15rem;
+            height: 1.15rem;
+            border: 1px solid var(--green);
+            content: "";
+        }
+
+        .limits {
+            padding: 1.4rem 1.5rem 0.1rem;
+            border: 1px solid var(--red-deep);
+        }
+
+        .limits h2 {
+            padding-top: 0;
+            border-top: 0;
+        }
+
+        .revision-note {
+            margin-top: 4rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--line);
+            color: var(--ink-soft);
+            font: 0.82rem/1.55 var(--sans);
+        }
+
+        .site-footer {
+            padding: 1.2rem 0 1.7rem;
+            border-top: 1px solid var(--ink);
+            color: var(--ink-soft);
+            font: 0.72rem/1.4 var(--sans);
+        }
+
+        .footer-lockup {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin: 0;
+        }
+
+        @media (max-width: 42rem) {
+            .shell {
+                width: min(100% - 2rem, 48rem);
+            }
+
+            article {
+                padding-top: 3rem;
+            }
+
+            .article-body {
+                font-size: 1rem;
+            }
+
+            .contract-list {
+                grid-template-columns: 1fr;
+            }
+
+            .contract-list li {
+                min-height: 0;
+            }
+
+            .wordmark {
+                gap: 0.45rem;
+                font-size: 0.58rem;
+                letter-spacing: 0.07em;
+            }
+
+            .wordmark-divider {
+                width: 0.3rem;
+                height: 0.3rem;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header shell">
+        <a class="wordmark" href="../../">
+            <span>Experimental Mathematics</span>
+            <span class="wordmark-divider" aria-hidden="true"></span>
+            <span>Jeff Kline</span>
+        </a>
+    </header>
+
+    <main class="shell">
+        <article>
+            <header>
+                <p class="kicker">Research protocol</p>
+                <h1>A Public Standard for This Work</h1>
+                <p class="dek">What a research link on this site promises, what must be present before a result is admitted, and how AI-assisted work will be checked, credited, corrected, and preserved.</p>
+                <p class="document-meta">Draft 0.2 · <time datetime="2026-08-01">August 2026</time></p>
+            </header>
+
+            <div class="article-body">
+                <p>I use AI to pursue mathematical questions that interest me and to do more with those questions than my available time would otherwise allow. AI can propose constructions, search for connections, draft proofs, write verification code, and attack its own conclusions. It can also produce fluent errors at great speed. This page records the standard I intend to apply before presenting any item on this site as a research result.</p>
+
+                <p>The aim is not to imitate a journal or to manufacture the appearance of peer review. It is to make each public result legible, inspectable, reproducible where possible, honest about uncertainty, and properly connected to the work that came before it. Admission to this site means that an artifact has passed the checklist below. It does not mean that the result has been independently reviewed or accepted by the mathematical community.</p>
+
+                <aside class="short-form" aria-label="The short form of this standard">
+                    <p>Every admitted item should answer five questions plainly: What is claimed? What is new? Why should anyone believe it? How can it be checked? How could someone build on it?</p>
+                </aside>
+
+                <section aria-labelledby="program-title">
+                    <h2 id="program-title">The research program</h2>
+                    <p>This is an independent, curiosity-driven program in experimental mathematics. I choose the questions, direct the work, decide what deserves attention, and take responsibility for what is published under my name. AI is a powerful collaborator in the process, but it is not an author, a referee, or a source of authority.</p>
+
+                    <p>I expect the form of the work to vary. Some results may be conventional papers. Others may be shorter notes, exact constructions, counterexamples, computational classifications, certificates, or repositories that combine prose, code, data, and an audit trail. The admission standard concerns the clarity and support of the claim, not the length or prestige of the format.</p>
+                </section>
+
+                <section aria-labelledby="contract-title">
+                    <h2 id="contract-title">What every result link will contain</h2>
+                    <p>Each research link from the main page will lead to a uniform result page. That page will serve as a compact guide to the complete artifact and will contain the following elements.</p>
+
+                    <ol class="contract-list">
+                        <li>
+                            <strong>Claim</strong>
+                            <span>A short, precise statement of the principal result.</span>
+                        </li>
+                        <li>
+                            <strong>Context</strong>
+                            <span>What was known before, which earlier authors are most relevant, and the specific contribution claimed here.</span>
+                        </li>
+                        <li>
+                            <strong>Evidence</strong>
+                            <span>The proof, computation, certificate, tests, or other checks supporting the claim.</span>
+                        </li>
+                        <li>
+                            <strong>Artifacts</strong>
+                            <span>Links to the paper or note, living repository, code, data, and verification instructions.</span>
+                        </li>
+                        <li>
+                            <strong>Notes, when needed</strong>
+                            <span>Material assumptions, caveats, unresolved points, or novelty qualifications that are not already clear from the claim, context, or evidence.</span>
+                        </li>
+                        <li>
+                            <strong>Citation and version</strong>
+                            <span>A preferred citation, publication date, version, permanent archive or DOI when available, and correction history.</span>
+                        </li>
+                    </ol>
+                </section>
+
+                <section aria-labelledby="admission-title">
+                    <h2 id="admission-title">Admission checklist</h2>
+                    <p>A research result may be linked from the main collection only after every applicable item below is satisfied. If an item does not apply, the artifact should make that clear rather than silently omit it.</p>
+
+                    <h3>Claim and scope</h3>
+                    <ul class="checklist">
+                        <li>The principal claim can be stated precisely and without promotional language.</li>
+                        <li>The main result is not stated more strongly than its supporting argument or computation allows.</li>
+                        <li>Any condition that materially changes how the principal claim should be read is visible near it.</li>
+                        <li>The abstract, repository summary, and paper state materially the same result.</li>
+                    </ul>
+
+                    <h3>Prior work and credit</h3>
+                    <ul class="checklist">
+                        <li>The closest known prior work has been sought and discussed.</li>
+                        <li>Original sources are cited where they can reasonably be located and checked.</li>
+                        <li>The artifact distinguishes a new existence result from a new proof, method, formula, implementation, interpretation, or example.</li>
+                        <li>When novelty remains uncertain, the claim says “apparently new” or otherwise states the boundary of the search.</li>
+                    </ul>
+
+                    <h3>Evidence and reproducibility</h3>
+                    <ul class="checklist">
+                        <li>The proof or evidence actually supports the advertised claim at the advertised level.</li>
+                        <li>Critical computations use exact arithmetic or independently checkable certificates when practical.</li>
+                        <li>Code, inputs, dependencies, and commands needed to reproduce material computational claims are public when they can be shared.</li>
+                        <li>Recorded outputs are tied to the version of the code and data that produced them.</li>
+                        <li>Sampling, numerical tolerance, search bounds, and other limits are stated explicitly.</li>
+                    </ul>
+
+                    <h3>Adversarial checking</h3>
+                    <ul class="checklist">
+                        <li>Important claims have been challenged through counterexample searches, alternate derivations, dependency tracing, or fresh-context audits appropriate to the result.</li>
+                        <li>Material findings from those checks are resolved, accepted as risks, or displayed as open.</li>
+                        <li>Model agreement is not described as independent peer review.</li>
+                        <li>Any external human review that is mentioned is described accurately and only with permission.</li>
+                    </ul>
+
+                    <h3>Release and stewardship</h3>
+                    <ul class="checklist">
+                        <li>The public artifact contains no placeholders, private material, unverifiable references, or known stale claims.</li>
+                        <li>The paper, repository, and result page carry consistent titles, author information, dates, and principal claims.</li>
+                        <li>A stable release is tagged and citable; substantial releases receive a permanent archive or DOI when appropriate.</li>
+                        <li>The living repository identifies the archived release while remaining available for corrections and further work.</li>
+                        <li>A correction, withdrawal, or supersession policy is visible and prior public versions remain identifiable.</li>
+                    </ul>
+                </section>
+
+                <section aria-labelledby="ai-title">
+                    <h2 id="ai-title">The role of AI</h2>
+                    <p>Unless an item says otherwise, readers should assume that AI built the work under my direction. That may include developing candidate mechanisms, drafting arguments, writing and testing code, searching for prior art, finding counterexamples, conducting audits, and producing the exposition. Repeating that provenance on every result page would add little; it is the default for this research program.</p>
+
+                    <p>Much of the supporting text is also written for AI agents. The repositories are intended to be ingested, questioned, traced, and extended by systems that can move between claims, proofs, code, data, dependencies, rejected approaches, and audit records. This may produce artifacts that are more structured, extensive, or operational than a conventional paper.</p>
+
+                    <p>Humans remain part of the intended audience. A motivated subject-matter expert should be able to identify the principal claim, understand the argument and evidence, locate the relevant artifacts, and evaluate the important qualifications without having to trust an AI summary. Agent-readability is an additional interface, not a substitute for human comprehensibility.</p>
+
+                    <p>AI output receives no presumption of correctness. Different agents may share training, methods, and blind spots, so agreement among them is evidence about a process, not independent validation. The purpose of multi-agent or fresh-context checking is to expose errors and sharpen questions. It does not recreate expert peer review.</p>
+
+                    <p>I remain responsible for choosing the questions, directing the work, setting the admission standard, deciding what to publish, and correcting or withdrawing it when necessary.</p>
+                </section>
+
+                <section aria-labelledby="credit-title">
+                    <h2 id="credit-title">Credit and priority</h2>
+                    <p>Mathematics advances by building on other people’s work. A result is not improved by making its ancestry hard to see. Each artifact should identify the nearest relevant results, credit the authors whose ideas or constructions it uses, and state the difference between those results and the present contribution.</p>
+
+                    <p>Literature searches can miss things, especially across older terminology or adjacent fields. If earlier work is later found, the public record will be corrected promptly. A narrowed novelty claim is a successful correction, not a reason to obscure the prior art.</p>
+                </section>
+
+                <section aria-labelledby="corrections-title">
+                    <h2 id="corrections-title">Corrections are part of the record</h2>
+                    <p>Errors are possible, including serious ones. Corrections should be visible, dated, and linked to the affected claim. Material changes should create a new version rather than silently replacing the citable object. Withdrawn claims should remain findable with a clear explanation so that readers do not unknowingly rely on them.</p>
+
+                    <p>The standard itself may also change. When experience shows that a check is weak, a category is misleading, or a better preservation practice exists, this page will be revised and its revision history recorded.</p>
+                </section>
+
+                <section class="limits" aria-labelledby="limits-title">
+                    <h2 id="limits-title">What this standard does not promise</h2>
+                    <p>Admission does not certify that a result is correct, novel, important, or suitable for publication elsewhere. It does not replace independent expert review. It promises something narrower: that the principal claim is stated honestly, its support is exposed, its relationship to prior work is addressed, material qualifications are not concealed, and the artifact is made as easy as practical to inspect, reproduce, cite, and correct.</p>
+                </section>
+
+                <p class="revision-note"><strong>Revision status:</strong> Draft 0.2, August 2026. This document governs which research results are linked from the main collection. Each later revision will preserve the purpose of the standard while recording material changes.</p>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer shell">
+        <p class="footer-lockup">
+            <span>Experimental Mathematics</span>
+            <span class="wordmark-divider" aria-hidden="true"></span>
+            <span>Jeff Kline</span>
+        </p>
+    </footer>
+</body>
+</html>

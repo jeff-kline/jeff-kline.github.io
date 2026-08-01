@@ -3,53 +3,718 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The public website of Jeff Kline.">
-    <title>Jeff Kline</title>
+    <meta name="description" content="Experimental Mathematics is Jeff Kline's public notebook for sparse matrices, Hadamard matrices, convex optimization, and computation-assisted proof.">
+    <title>Experimental Mathematics | Jeff Kline</title>
     <style>
         :root {
-            color-scheme: light dark;
-            font-family: Georgia, "Times New Roman", serif;
+            color-scheme: light;
+            --paper: #f7f2e9;
+            --ink: #26352e;
+            --ink-soft: #526157;
+            --line: #c8c2b2;
+            --red: #b64f3d;
+            --red-deep: #8f392f;
+            --green: #6f7d68;
+            --gold: #c49d61;
+            --white: #f8f3e9;
+            --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
+            min-width: 18rem;
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--sans);
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .shell {
+            width: min(68rem, calc(100% - 3rem));
+            margin: 0 auto;
+        }
+
+        .site-header {
             display: grid;
-            min-height: 100vh;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: baseline;
+            gap: 2rem;
+            padding: 1.15rem 0 0.9rem;
+        }
+
+        .site-title {
             margin: 0;
-            place-items: center;
-            background: #f5f1e8;
-            color: #152238;
+            font-family: var(--sans);
+            font-size: 1rem;
+            line-height: 1;
         }
 
-        main {
-            width: min(44rem, calc(100% - 3rem));
+        .wordmark {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            min-width: 0;
+            color: var(--ink);
+            font-size: 0.73rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-decoration: none;
+            text-transform: uppercase;
         }
 
-        h1 {
-            max-width: 12ch;
+        .wordmark-divider {
+            width: 0.38rem;
+            height: 0.38rem;
+            flex: 0 0 auto;
+            background: var(--red-deep);
+        }
+
+        .site-status {
+            justify-self: end;
             margin: 0;
-            font-size: clamp(3rem, 11vw, 7rem);
-            line-height: 0.92;
-            letter-spacing: -0.055em;
+            color: var(--red-deep);
+            text-align: right;
         }
 
+        .text-link:hover,
+        .text-link:focus-visible {
+            color: var(--red-deep);
+        }
+
+        .landing-grid {
+            --landing-rule-y: -0.25rem;
+            --landing-top-gap: clamp(1.35rem, 2vw, 1.65rem);
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(19rem, 0.75fr);
+            gap: clamp(2rem, 5vw, 4rem);
+            align-items: start;
+            padding: var(--landing-top-gap) 0 1.9rem;
+        }
+
+        .landing-grid::before {
+            position: absolute;
+            top: var(--landing-rule-y);
+            right: 0;
+            left: 0;
+            height: 1px;
+            background: var(--ink);
+            content: "";
+        }
+
+        .eyebrow {
+            margin: 0 0 1rem;
+            color: var(--red-deep);
+            font-size: 0.7rem;
+            font-weight: 850;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3,
         p {
-            max-width: 34rem;
-            margin: 2rem 0 0;
-            font: 1.1rem/1.65 system-ui, sans-serif;
+            margin-top: 0;
         }
 
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: #111722;
-                color: #f3ead8;
+        h1,
+        h2,
+        h3 {
+            font-family: var(--sans);
+            font-weight: 700;
+        }
+
+        .quick-read {
+            margin: 0;
+            padding-top: 0.85rem;
+        }
+
+        .quick-read-column {
+            min-width: 0;
+        }
+
+        .quick-read-row {
+            display: grid;
+            grid-template-columns: 7rem minmax(0, 1fr);
+            gap: 1rem;
+            padding: 0.75rem 0;
+            font-size: 0.82rem;
+            line-height: 1.35;
+        }
+
+        .quick-read dl {
+            margin: 0;
+        }
+
+        .quick-read dt {
+            color: var(--ink-soft);
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        .quick-read dd {
+            margin: 0;
+            text-align: right;
+        }
+
+        .quick-read-link {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.25em;
+        }
+
+        .latest-section {
+            position: relative;
+            display: block;
+            max-width: none;
+            padding: 0;
+        }
+
+        .section-heading {
+            display: block;
+            margin-bottom: 0.85rem;
+        }
+
+        h2 {
+            max-width: 15ch;
+            margin-bottom: 0;
+            color: var(--ink-soft);
+            font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+            line-height: 1;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .note-list {
+            padding-top: 0.35rem;
+        }
+
+        .note-archive-note {
+            margin: 0 0 0.75rem;
+            color: var(--ink-soft);
+            font-size: 0.68rem;
+            letter-spacing: 0.04em;
+        }
+
+        .note-archive-note strong {
+            color: var(--red-deep);
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .note-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.75rem 1.5rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .note-toolbar .note-archive-note {
+            margin-bottom: 0;
+        }
+
+        .note-filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: flex-end;
+            gap: 0.35rem 0.75rem;
+        }
+
+        .note-filter-group {
+            display: grid;
+            justify-items: start;
+            gap: 0.25rem;
+        }
+
+        .note-filter-label {
+            color: var(--ink-soft);
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .note-filter,
+        .note-tag {
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: var(--ink-soft);
+            font-family: inherit;
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .note-filter {
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.25em;
+        }
+
+        .note-filter[aria-pressed="true"],
+        .note-filter:hover,
+        .note-filter:focus-visible {
+            color: var(--red-deep);
+        }
+
+        .note-filter[aria-pressed="true"] {
+            text-decoration-thickness: 2px;
+        }
+
+        .note-filter-count {
+            color: var(--ink-soft);
+            font-size: 0.6rem;
+            letter-spacing: 0.04em;
+        }
+
+        .note-entry {
+            display: grid;
+            grid-template-columns: 5rem minmax(0, 1fr) minmax(8rem, auto);
+            gap: 1rem;
+            align-items: start;
+            padding: 1rem 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .note-entry:first-of-type {
+            border-top-color: var(--ink);
+        }
+
+        .note-date {
+            display: grid;
+            gap: 0.25rem;
+            color: var(--ink-soft);
+            font-size: 0.63rem;
+            line-height: 1.25;
+        }
+
+        .note-date time {
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .note-age {
+            color: var(--red-deep);
+        }
+
+        .note-title {
+            margin-bottom: 0.3rem;
+            font-size: 1.05rem;
+            line-height: 1.15;
+        }
+
+        .note-title a {
+            text-decoration: none;
+        }
+
+        .note-title a:hover,
+        .note-title a:focus-visible {
+            color: var(--red-deep);
+        }
+
+        .note-summary {
+            max-width: 34rem;
+            margin: 0;
+            color: var(--ink-soft);
+            font-size: 0.83rem;
+            line-height: 1.45;
+        }
+
+        .note-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 0.3rem 0.65rem;
+            padding-top: 0.05rem;
+        }
+
+        .note-entry[hidden] {
+            display: none;
+        }
+
+        .note-empty {
+            display: block;
+            padding: 1rem 0;
+        }
+
+        .note-status {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 1rem;
+            margin-bottom: 0.8rem;
+            color: var(--ink-soft);
+            font-size: 0.67rem;
+            font-weight: 750;
+            letter-spacing: 0.08em;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+
+        .status {
+            color: var(--red-deep);
+        }
+
+        .note-description {
+            max-width: 34rem;
+            margin-bottom: 0;
+            color: var(--ink-soft);
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        .note-empty .text-link {
+            display: inline-block;
+            margin-top: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .site-footer {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.2rem 0 1.7rem;
+            color: var(--ink-soft);
+            font-size: 0.72rem;
+        }
+
+        .footer-copy {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.55rem 1.5rem;
+            min-width: 0;
+        }
+
+        .footer-mark {
+            position: relative;
+            width: 12rem;
+            height: 1.75rem;
+            justify-self: end;
+        }
+
+        .footer-rule {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            left: 0;
+            height: 1px;
+            background: var(--ink);
+        }
+
+        .footer-mark svg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4.5rem;
+            height: 1.75rem;
+            overflow: visible;
+        }
+
+        .site-footer p {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 700px) {
+            .shell {
+                width: min(100% - 2rem, 34rem);
+            }
+
+            .site-title .wordmark {
+                gap: 0.45rem;
+                font-size: 0.58rem;
+                letter-spacing: 0.07em;
+            }
+
+            .wordmark-divider {
+                width: 0.3rem;
+                height: 0.3rem;
+            }
+
+            .landing-grid,
+            .latest-section {
+                display: block;
+            }
+
+            .landing-grid {
+                --landing-rule-y: -0.1rem;
+                --landing-top-gap: 1.2rem;
+                padding: var(--landing-top-gap) 0 1.6rem;
+            }
+
+            .quick-read-column {
+                margin-top: 2.5rem;
+            }
+
+            .site-header {
+                display: block;
+            }
+
+            .site-status {
+                justify-self: auto;
+                margin: 0.8rem 0 0;
+                text-align: right;
+            }
+
+            .quick-read-row {
+                grid-template-columns: 5.5rem minmax(0, 1fr);
+            }
+
+            .latest-section {
+                padding: 0;
+            }
+
+            .note-entry {
+                grid-template-columns: 4.5rem minmax(0, 1fr);
+                gap: 0.75rem;
+            }
+
+            .landing-grid {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .note-tags {
+                grid-column: 2;
+                justify-content: flex-start;
+                padding-top: 0;
+            }
+
+            .quick-read-column {
+                order: -1;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .site-footer {
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 0.8rem;
+            }
+
+            .footer-copy {
+                display: block;
+            }
+
+            .footer-mark {
+                width: 9rem;
+            }
+
+            .footer-copy p + p {
+                margin-top: 0.55rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
             }
         }
     </style>
 </head>
 <body>
-    <main>
-        <h1>Jeff Kline</h1>
-        <p>A home for selected work, ideas, and projects.</p>
+    <header class="site-header shell">
+        <h1 class="site-title">
+            <span class="wordmark">
+                <span>Experimental Mathematics</span>
+                <span class="wordmark-divider" aria-hidden="true"></span>
+                <span class="wordmark-owner">Jeff Kline</span>
+            </span>
+        </h1>
+    </header>
+
+    <main id="top">
+        <section class="landing-grid shell" aria-label="Project overview">
+            <section class="latest-section" id="work" aria-labelledby="work-title">
+                <div class="section-heading">
+                    <h2 id="work-title">Public Work</h2>
+                </div>
+
+                <div class="note-list">
+                    <div class="note-toolbar">
+                        <nav class="note-filters" aria-label="Filter public work by tag">
+                            <span class="note-filter-group">
+                                <span class="note-filter-label">Browse tags</span>
+                                <span class="note-filter-count" aria-live="polite"></span>
+                            </span>
+                            <button class="note-filter" type="button" data-tag-filter="all" aria-label="Clear tag filter and show all public work" aria-pressed="true">All work</button>
+                            <button class="note-filter" type="button" data-tag-filter="special" aria-pressed="false">Special matrices</button>
+                            <button class="note-filter" type="button" data-tag-filter="proof" aria-pressed="false">Proof</button>
+                            <button class="note-filter" type="button" data-tag-filter="optimization" aria-pressed="false">Optimization</button>
+                            <button class="note-filter" type="button" data-tag-filter="computation" aria-pressed="false">Computation</button>
+                            <button class="note-filter" type="button" data-tag-filter="other" aria-pressed="false">Other</button>
+                        </nav>
+                    </div>
+
+                    <article class="note-entry" id="post-research-program" data-tags="other">
+                        <div class="note-date"><time datetime="2026-08-01">Aug 01</time><span class="note-age">Today</span></div>
+                        <div>
+                            <h3 class="note-title"><a href="posts/research-program/index.html">A Public Standard for This Work</a></h3>
+                            <p class="note-summary">The admission standard for work on this site: clear claims, prior-art credit, checks, reproducibility, correction, and preservation.</p>
+                        </div>
+                        <div class="note-tags" aria-label="Tags for A Public Standard for This Work">
+                            <span class="note-tag">essay</span>
+                            <span class="note-tag">other</span>
+                        </div>
+                    </article>
+
+                    <article class="note-entry" id="post-expertise-is-changing" data-tags="other">
+                        <div class="note-date"><time datetime="2026-08-01">Aug 01</time><span class="note-age">Today</span></div>
+                        <div>
+                            <h3 class="note-title"><a href="posts/expertise-is-changing/index.html">Expertise Is Changing</a></h3>
+                            <p class="note-summary">Capability is becoming abundant, while attention, judgment, and justified confidence remain scarce.</p>
+                        </div>
+                        <div class="note-tags" aria-label="Tags for Expertise Is Changing">
+                            <span class="note-tag">essay</span>
+                            <span class="note-tag">other</span>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <div class="quick-read-column">
+                <dl class="quick-read" aria-label="Experimental Mathematics at a glance">
+                    <div class="quick-read-row">
+                        <dt>Topics</dt>
+                        <dd>Special matrices and convex optimization</dd>
+                    </div>
+                    <div class="quick-read-row">
+                        <dt>Approach</dt>
+                        <dd>AI, computation, and proof</dd>
+                    </div>
+                    <div class="quick-read-row">
+                        <dt>Standards</dt>
+                        <dd><a class="quick-read-link" href="posts/research-program/index.html">Research protocol</a></dd>
+                    </div>
+                    <div class="quick-read-row">
+                        <dt>Background</dt>
+                        <dd>Fintech and LIGO</dd>
+                    </div>
+                    <div class="quick-read-row">
+                        <dt>LinkedIn</dt>
+                        <dd><a class="quick-read-link" href="https://www.linkedin.com/in/jeff-kline/" target="_blank" rel="noopener noreferrer">Profile</a></dd>
+                    </div>
+                    <div class="quick-read-row">
+                        <dt>ORCID</dt>
+                        <dd><a class="quick-read-link" href="https://orcid.org/0009-0009-2762-9654" target="_blank" rel="noopener noreferrer">Papers</a></dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
     </main>
+
+    <footer class="site-footer shell">
+        <div class="footer-copy">
+            <p>Updated when there is something to add.</p>
+        </div>
+        <div class="footer-mark" aria-hidden="true">
+            <span class="footer-rule"></span>
+            <svg viewBox="0 0 72 28" focusable="false">
+                <path d="M16 0V28" fill="none" stroke="var(--red-deep)" stroke-width="1.5" />
+                <rect x="27" y="3" width="5" height="5" fill="var(--green)" />
+                <rect x="43" y="3" width="5" height="5" fill="var(--green)" />
+                <rect x="35" y="12" width="5" height="5" fill="var(--green)" />
+                <rect x="59" y="12" width="5" height="5" fill="var(--green)" />
+                <rect x="51" y="21" width="5" height="5" fill="var(--green)" />
+            </svg>
+        </div>
+    </footer>
+
+    <script>
+        (() => {
+            const entries = [...document.querySelectorAll(".note-entry")];
+            const filters = [...document.querySelectorAll("[data-tag-filter]")];
+            const count = document.querySelector(".note-filter-count");
+
+            filters.forEach((filter) => {
+                const tag = filter.dataset.tagFilter;
+                if (tag !== "all" && !entries.some((entry) => entry.dataset.tags.split(" ").includes(tag))) {
+                    filter.hidden = true;
+                }
+            });
+
+            entries.forEach((entry) => {
+                const time = entry.querySelector("time");
+                const age = entry.querySelector(".note-age");
+                const published = new Date(`${time.dateTime}T00:00:00`);
+                const today = new Date();
+                const daysOld = Math.max(0, Math.floor((today - published) / 86400000));
+                age.textContent = daysOld === 0 ? "Today" : `${daysOld} day${daysOld === 1 ? "" : "s"} old`;
+            });
+
+            const applyFilter = (tag, updateHash = true) => {
+                const visibleEntries = entries.filter((entry) => {
+                    const visible = tag === "all" || entry.dataset.tags.split(" ").includes(tag);
+                    entry.hidden = !visible;
+                    return visible;
+                });
+
+                filters.forEach((filter) => {
+                    filter.setAttribute("aria-pressed", String(filter.dataset.tagFilter === tag));
+                });
+
+                if (count) {
+                    count.textContent = `${visibleEntries.length} items`;
+                }
+
+                if (updateHash) {
+                    history.replaceState(null, "", tag === "all" ? `${location.pathname}${location.search}` : `#tag-${tag}`);
+                }
+            };
+
+            const filterFromHash = () => {
+                if (location.hash.startsWith("#note-")) {
+                    return;
+                }
+
+                if (location.hash === "#work") {
+                    history.replaceState(null, "", `${location.pathname}${location.search}`);
+                    window.scrollTo(0, 0);
+                }
+
+                const tag = location.hash.startsWith("#tag-") ? location.hash.slice(5) : "all";
+                const knownTag = filters.some((filter) => filter.dataset.tagFilter === tag);
+                applyFilter(knownTag ? tag : "all", false);
+            };
+
+            document.addEventListener("click", (event) => {
+                const filter = event.target.closest("[data-tag-filter]");
+                if (filter) {
+                    applyFilter(filter.dataset.tagFilter);
+                }
+            });
+
+            window.addEventListener("hashchange", filterFromHash);
+            filterFromHash();
+        })();
+    </script>
 </body>
 </html>

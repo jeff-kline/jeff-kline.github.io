@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Jeff Kline on how AI shifts expertise from producing answers toward choosing questions, directing inquiry, and earning confidence.">
+    <title>Expertise Is Changing | Experimental Mathematics</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --paper: #f7f2e9;
+            --ink: #26352e;
+            --ink-soft: #526157;
+            --line: #c8c2b2;
+            --red-deep: #8f392f;
+            --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --serif: Georgia, "Times New Roman", serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 18rem;
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        a {
+            color: var(--red-deep);
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.2em;
+        }
+
+        a:hover,
+        a:focus-visible {
+            color: var(--ink);
+        }
+
+        .shell {
+            width: min(45rem, calc(100% - 3rem));
+            margin: 0 auto;
+        }
+
+        .site-header {
+            padding: 1.2rem 0 1rem;
+            border-bottom: 1px solid var(--ink);
+            font-family: var(--sans);
+        }
+
+        .wordmark {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: var(--ink);
+            font-size: 0.73rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .wordmark-divider {
+            width: 0.38rem;
+            height: 0.38rem;
+            flex: 0 0 auto;
+            background: var(--red-deep);
+        }
+
+        main {
+            display: block;
+        }
+
+        article {
+            padding: clamp(3rem, 8vw, 6rem) 0 5rem;
+        }
+
+        .kicker {
+            margin: 0 0 1rem;
+            color: var(--red-deep);
+            font: 800 0.7rem/1.2 var(--sans);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 12ch;
+            margin: 0;
+            font: 700 clamp(3rem, 10vw, 6rem)/0.95 var(--sans);
+            letter-spacing: -0.055em;
+        }
+
+        .dek {
+            max-width: 33rem;
+            margin: 1.6rem 0 3rem;
+            color: var(--ink-soft);
+            font: 500 clamp(1.1rem, 3vw, 1.35rem)/1.5 var(--sans);
+        }
+
+        .article-body {
+            font: 1.08rem/1.72 var(--serif);
+        }
+
+        .article-body p {
+            margin: 0 0 1.45rem;
+        }
+
+        .article-body p:first-child::first-letter {
+            float: left;
+            margin: 0.08em 0.08em 0 0;
+            color: var(--red-deep);
+            font: 700 4.1rem/0.8 var(--serif);
+        }
+
+        .source-note {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--line);
+            color: var(--ink-soft);
+            font: 0.82rem/1.55 var(--sans);
+        }
+
+        .site-footer {
+            padding: 1.2rem 0 1.7rem;
+            border-top: 1px solid var(--ink);
+            color: var(--ink-soft);
+            font: 0.72rem/1.4 var(--sans);
+        }
+
+        .footer-lockup {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin: 0;
+        }
+
+        @media (max-width: 40rem) {
+            .shell {
+                width: min(100% - 2rem, 45rem);
+            }
+
+            article {
+                padding-top: 3rem;
+            }
+
+            .article-body {
+                font-size: 1rem;
+            }
+
+            .wordmark {
+                gap: 0.45rem;
+                font-size: 0.58rem;
+                letter-spacing: 0.07em;
+            }
+
+            .wordmark-divider {
+                width: 0.3rem;
+                height: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header shell">
+        <a class="wordmark" href="../../">
+            <span>Experimental Mathematics</span>
+            <span class="wordmark-divider" aria-hidden="true"></span>
+            <span>Jeff Kline</span>
+        </a>
+    </header>
+
+    <main class="shell">
+        <article>
+            <header>
+                <p class="kicker">Essay</p>
+                <h1>Expertise Is Changing</h1>
+                <p class="dek">Capability is becoming abundant, while attention, judgment, and justified confidence remain scarce.</p>
+            </header>
+
+            <div class="article-body">
+                <p>Expertise is valuable partly because it is scarce: it enables work that most people cannot do. New technologies change who is able to do that work, and AI is now forcing change at extraordinary speed. AI can draft arguments, search the literature, write code, and even attempt proofs. Does that make expertise obsolete?</p>
+
+                <p>The value of performing tasks drops once a machine can produce equal or better work in less time. But experts’ work changes with tools: most fabric is no longer handwoven, and most calculations are no longer manual. Automation shifts value toward different work. AI is forcing another change of this kind. What is the shape of the new work?</p>
+
+                <p>Over the past few days, despite time constraints and my own rusting knowledge, I have been revisiting some old mathematics to learn what the new tools can do. I worked iteratively with several agents, asking questions, challenging claims, checking dependencies, and redirecting their efforts. I ended up with far more output than I could have produced on my own. That leverage would have been unimaginable to me even a year ago. I am struck by how AI has changed my role: away from producing every step and toward choosing the questions, challenging the answers, and deciding where to go next.</p>
+
+                <p>AI makes good questions productive. Questions previously blocked by gaps in knowledge, skill, or time can now initiate serious inquiry. A question that once would have ended in a conjecture reserved for future work can now lead to candidate approaches in minutes. This does not close the question, but it can rule out hunches, expose structure, and inspire more promising directions.</p>
+
+                <p>While doing this, several problems emerged. The first was immediate: How could I know whether any of the work was true? Candidate answers appear much faster than they can be checked. A plausible-looking argument is not an established proof, and agreement among agents, even agents instructed to challenge one another, is not independent review. Similar models may reproduce similar errors. I tried to reduce this risk, not eliminate it, through adversarial criticism, different lines of attack, dependency tracing, numerical checks, and repeated examination of critical steps. This borrows organized criticism from peer review, but it does not replace independent expert review. The process gave me enough confidence to make the work public and invite scrutiny, not to call it established mathematics. Calibrating that confidence requires domain judgment.</p>
+
+                <p>The second problem was my own attention. When answers arrive at ferocious speed, the volume overwhelms what any person can track. I was deciding which claims needed testing, which branches to prune, and what deserved further examination. AI can generate more analysis, objections, refinements, and polished dead ends than I could ever read. The new expertise shifts from production toward discernment.</p>
+
+                <p>The third problem was overdelegation. Delegation has gone too far when I can no longer tell whether the work serves the goal. Agents may make technically sound progress while the effort heads in the wrong direction. Norbert Wiener warned that a machine can faithfully pursue the wrong objective when the formal goal is only a proxy for what people value. Delegation does not remove responsibility. Capability amplifies the direction it is given. Determining value remains a human responsibility.</p>
+
+                <p>These problems changed how I think confidence is earned. It must rest on the process that produced and tested a conclusion. In my experiments, one agent proposed, another attacked, while others traced dependencies, checked evidence, or tried another route. The process exposed critical assumptions and preserved uncertainty and disagreement rather than averaging them away. Its purpose was to supply skepticism and direction that agents do not reliably supply for themselves.</p>
+
+                <p>One unexpected outcome was an artifact I did not set out to create. The volume of reasoning, dependencies, revisions, and abandoned routes no longer fit comfortably inside a conventional paper. What emerged from this work sits somewhere between prose and code. A reader can give the repository to an agent and ask: Where is the weakest step? What depends on this lemma? What was rejected? Which claims remain conjectural? I think of this output as a restartable inquiry, an agent-native research record designed to be questioned and extended. Agent-readable does not mean validated; it means the work can remain active and inspectable.</p>
+
+                <p>Many public discussions of AI focus on which model scores best on benchmarks or what tokens cost. A sharper question is: What can a well-designed system of people and models do? Models can generate, search, challenge, trace, and revise at a scale that was beyond my reach even a year ago. People still have to set intent, choose consequential questions, recognize drift, and remain responsible. Capability is becoming abundant, while attention, judgment, and justified confidence remain scarce. Expertise is changing; its center is moving from producing answers to designing a process in which answers can earn trust.</p>
+
+                <p>I am sharing two experiments in this spirit. One reports progress toward the conjectured converse of Turyn’s theorem, an open conjecture dating to 1972. The other presents candidate results that appear to prove one conjecture from an earlier paper of mine, refute and replace another, and extend that work substantially. The repositories state the claims directly, but readers should treat them as candidate results: they have not been independently reviewed or accepted.</p>
+
+                <p>I expect skepticism, especially from experts. That skepticism is warranted. I am sharing the work precisely so that others can use their own agents to trace the reasoning, reproduce checks, expose errors, improve arguments, or discover better questions. Agent agreement will not constitute independent validation. The process can still make the work easier to inspect and challenge, and it may suggest new lines of inquiry.</p>
+
+                <p>There is a risk in showing unfinished work that may be wrong, especially in this unconventional form. But capability is formed through action. I wanted to learn how to work in deep water without confusing fluency for truth or delegation for judgment. For me, the most important result is what I learned about asking consequential questions and about building a process worthy of the answers.</p>
+
+                <p class="source-note"><strong>Source note:</strong> The discussion of a machine faithfully pursuing the wrong objective paraphrases Norbert Wiener, “Some Moral and Technical Consequences of Automation,” <cite>Science</cite> 131 (1960). <a href="https://doi.org/10.1126/science.131.3410.1355" target="_blank" rel="noopener noreferrer">doi:10.1126/science.131.3410.1355</a></p>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer shell">
+        <p class="footer-lockup">
+            <span>Experimental Mathematics</span>
+            <span class="wordmark-divider" aria-hidden="true"></span>
+            <span>Jeff Kline</span>
+        </p>
+    </footer>
+</body>
+</html>
