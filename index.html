@@ -293,7 +293,7 @@
 
         .note-entry {
             display: grid;
-            grid-template-columns: 5rem minmax(0, 1fr) minmax(8rem, auto);
+            grid-template-columns: 5rem minmax(0, 1fr);
             gap: 1rem;
             align-items: start;
             padding: 1rem 0;
@@ -347,10 +347,11 @@
 
         .note-tags {
             display: flex;
+            grid-column: 2;
             flex-wrap: wrap;
-            justify-content: flex-end;
+            justify-content: flex-start;
             gap: 0.3rem 0.65rem;
-            padding-top: 0.05rem;
+            padding-top: 0;
         }
 
         .note-entry[hidden] {
@@ -572,6 +573,19 @@
                         </nav>
                     </div>
 
+                    <article class="note-entry" id="project-geometric-difference-families" data-tags="special proof computation">
+                        <div class="note-date"><time datetime="2026-08-02">Aug 02</time><span class="note-age">Today</span></div>
+                        <div>
+                            <h3 class="note-title"><a href="https://github.com/jeff-kline/geometric-difference-families/tree/main" target="_blank" rel="noopener noreferrer">Geometric Difference Families</a></h3>
+                            <p class="note-summary">A recursive construction for partitioned difference families with geometric block sizes, with a proof and exact verification code.</p>
+                        </div>
+                        <div class="note-tags" aria-label="Tags for Geometric Difference Families">
+                            <span class="note-tag">special matrices</span>
+                            <span class="note-tag">proof</span>
+                            <span class="note-tag">computation</span>
+                        </div>
+                    </article>
+
                     <article class="note-entry" id="post-research-program" data-tags="other">
                         <div class="note-date"><time datetime="2026-08-01">Aug 01</time><span class="note-age">Today</span></div>
                         <div>
@@ -579,7 +593,6 @@
                             <p class="note-summary">The admission standard for work on this site: clear claims, prior-art credit, checks, reproducibility, correction, and preservation.</p>
                         </div>
                         <div class="note-tags" aria-label="Tags for A Public Standard for This Work">
-                            <span class="note-tag">essay</span>
                             <span class="note-tag">other</span>
                         </div>
                     </article>
@@ -591,7 +604,6 @@
                             <p class="note-summary">Capability is becoming abundant, while attention, judgment, and justified confidence remain scarce.</p>
                         </div>
                         <div class="note-tags" aria-label="Tags for Expertise Is Changing">
-                            <span class="note-tag">essay</span>
                             <span class="note-tag">other</span>
                         </div>
                     </article>
