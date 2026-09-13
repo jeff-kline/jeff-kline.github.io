@@ -101,6 +101,8 @@ def prose_only(text: str, suffix: str) -> str:
     if suffix == ".html":
         text = re.sub(r"(?is)<(?:script|style)\b.*?</(?:script|style)>", " ", text)
         text = re.sub(r"(?s)<!--.*?-->", " ", text)
+        # Inline markup does not add whitespace to rendered prose.
+        text = re.sub(r"(?is)</?(?:a|span|em|strong|b|i|small|sub|sup|time)\b[^>]*>", "", text)
         text = re.sub(r"(?s)<[^>]+>", " ", text)
         return html.unescape(text)
 
