@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Jeff Kline on AI, the value of work, and how the next generation will develop judgment.">
+    <title>Why math matters for the rest of us | Experimental Mathematics</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --paper: #f7f2e9;
+            --ink: #26352e;
+            --ink-soft: #526157;
+            --line: #c8c2b2;
+            --red-deep: #8f392f;
+            --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --serif: Georgia, "Times New Roman", serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-width: 18rem;
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+        }
+
+        a {
+            color: var(--red-deep);
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.2em;
+        }
+
+        a:hover,
+        a:focus-visible {
+            color: var(--ink);
+        }
+
+        .shell {
+            width: min(45rem, calc(100% - 3rem));
+            margin: 0 auto;
+        }
+
+        .site-header {
+            padding: 1.2rem 0 1rem;
+            border-bottom: 1px solid var(--ink);
+            font-family: var(--sans);
+        }
+
+        .wordmark {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: var(--ink);
+            font-size: 0.73rem;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .wordmark-divider {
+            width: 0.38rem;
+            height: 0.38rem;
+            flex: 0 0 auto;
+            background: var(--red-deep);
+        }
+
+        main {
+            display: block;
+        }
+
+        article {
+            padding: clamp(3rem, 8vw, 6rem) 0 5rem;
+        }
+
+        .kicker {
+            margin: 0 0 1rem;
+            color: var(--red-deep);
+            font: 800 0.7rem/1.2 var(--sans);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: none;
+            margin: 0;
+            font: 700 clamp(1.75rem, 3.4vw, 2.1rem)/1.08 var(--sans);
+            letter-spacing: -0.025em;
+        }
+
+        .dek {
+            max-width: 36rem;
+            margin: 1.25rem 0 1rem;
+            color: var(--ink-soft);
+            font: 500 clamp(1.05rem, 1.8vw, 1.2rem)/1.55 var(--sans);
+        }
+
+        .document-meta {
+            margin: 0 0 2.5rem;
+            color: var(--ink-soft);
+            font: 700 0.68rem/1.4 var(--sans);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .original-publication {
+            display: block;
+            margin-top: 0.35rem;
+        }
+
+        .article-body {
+            font: 1.08rem/1.72 var(--serif);
+        }
+
+        .article-body p {
+            margin: 0 0 1.45rem;
+        }
+
+        .source-note {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--line);
+            color: var(--ink-soft);
+            font: 0.82rem/1.55 var(--sans);
+        }
+
+        .site-footer {
+            padding: 1.2rem 0 1.7rem;
+            border-top: 1px solid var(--ink);
+            color: var(--ink-soft);
+            font: 0.72rem/1.4 var(--sans);
+        }
+
+        .footer-lockup {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin: 0;
+        }
+
+        @media (max-width: 40rem) {
+            .shell {
+                width: min(100% - 2rem, 45rem);
+            }
+
+            article {
+                padding-top: 3rem;
+            }
+
+            .article-body {
+                font-size: 1rem;
+            }
+
+            .wordmark {
+                gap: 0.45rem;
+                font-size: 0.58rem;
+                letter-spacing: 0.07em;
+            }
+
+            .wordmark-divider {
+                width: 0.3rem;
+                height: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header shell">
+        <a class="wordmark" href="../../">
+            <span>Experimental Mathematics</span>
+            <span class="wordmark-divider" aria-hidden="true"></span>
+            <span>Jeff Kline</span>
+        </a>
+    </header>
+
+    <main class="shell">
+        <article>
+            <header>
+                <p class="kicker">Essay</p>
+                <h1>Why math matters for the rest of us</h1>
+                <p class="document-meta">
+                    Published <time datetime="2026-09-13">September 13, 2026</time> · Version 1.0
+                </p>
+            </header>
+
+            <div class="article-body">
+                <p>Why math matters for the rest of us: it is a leading indicator of how knowledge work will evolve. In math, AI increasingly takes on the search for a proof. More attention can go to choosing the question, judging the argument, and understanding what the result makes possible. The goal is unchanged: expand the frontier, and pass the knowledge along.</p>
+
+                <p>In knowledge work, toil is not a sign of value and complexity is not a sign of quality. Outcomes matter. I have watched effort mistaken for value in many contexts. Set aside the societal risks, which I take seriously. Much of the remaining negativity about AI mistakes effort for value in the same way: work that arrives without toil is treated as work without worth. AI slop is real: mindless, uninformed prompts followed by unvetted, uncurated output with no thought for its effects. But AI can also raise standards and accelerate outcomes.</p>
+
+                <p>AI gives expertise and taste greater reach. What AI changed is capability, and leveling capability does not level the landscape. The landmarks still stand. What rises is the ground people start from, and how many can start.</p>
+
+                <p>My own work with AI has three aims: following my curiosity, improving how I work with these tools, and sharing results that are interesting, if not famous, and meet a basic but honest standard. I do not plan to submit it for peer review. Each note says so, and says what was checked. I welcome scrutiny, but I do not assume anyone owes it their time.</p>
+
+                <p>Effort is not proof of value. But working through difficulty can build judgment. One large problem remains open: how to develop expertise when AI takes over the tasks through which people once learned. The next generation will still have hard work to do. I am optimistic that we can give them better ways to learn, without confusing an easier path with a lesser understanding.</p>
+
+                <p class="source-note"><strong>Related work:</strong> <a href="https://github.com/jeff-kline/covering-hitting-diversities" target="_blank" rel="noopener noreferrer">Covering versus hitting in diversity embeddings</a> gives a counterexample to Conjecture 1.7 of Jozefiak and Shepherd (arXiv:2303.04199v1): a hypergraph built from affine lines has a polynomial-size description yet requires ℓ<sub>1</sub> diversity distortion of order √n. The paper includes a small example and matching bounds for unit-cost pairwise-intersecting hypergraphs. The lower bound was already known; priority of the compact realization remains unresolved. <a href="https://doi.org/10.5281/zenodo.22731697" target="_blank" rel="noopener noreferrer">Version 0.1.0 DOI</a></p>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer shell">
+        <p class="footer-lockup">
+            <span>Experimental Mathematics</span>
+            <span class="wordmark-divider" aria-hidden="true"></span>
+            <span>Jeff Kline</span>
+        </p>
+    </footer>
+</body>
+</html>
