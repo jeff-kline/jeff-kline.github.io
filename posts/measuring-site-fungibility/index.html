@@ -30,7 +30,7 @@
 <main>
 <p class="eyebrow">Operations research · Systems thinking</p>
 <h1>Measuring&nbsp;fungibility</h1>
-<p class="document-meta">Published <time datetime="2026-09-19">September 19, 2026</time> · Version 1.6</p>
+<p class="document-meta">Published <time datetime="2026-09-19">September 19, 2026</time> · Version 1.7</p>
 
 <div class="intro"><p>Uniformity across sites is a question in any network. A common ideal is fungible sites: any one can stand in for any other. The sites might be plants, branches, call centers, servers, or teams; the metrics might be productivity, error rate, orders fulfilled, or calls handled. When the sites are meant to be fungible, the operating questions are how far apart they are, where the gaps sit, and whether they are closing. This page connects this basic and universal question to a single measure.</p><p>The measure is <a href="https://en.wikipedia.org/wiki/Earth_mover%27s_distance" target="_blank" rel="noopener noreferrer">Earth Mover’s Distance</a> (EMD). It has a long history, starting with Monge in the 18th century, and takes its name from the most efficient way to move a pile of earth from one place to another. Most applications compare a pair, shifting one pile onto another. What is different here is that we compare many distributions at once. To my knowledge, this more general form is not widely known or practiced. It came out of an application at a prior workplace, and I have seen the same problem in many contexts since, past and current. <a href="https://doi.org/10.1016/j.dam.2019.02.042" target="_blank" rel="noopener noreferrer">A paper I wrote</a> derives several nice properties of this more general construct. I have long wanted to surface this to a broader audience, so I partnered with AI to see what could be done in this direction. The result is the interactive illustration on this page, built on fictional widget data.</p><p>A common way to report this sort of view is shown in the table below. It shows just one metric across four sites, it is sparse, and the cognitive load to understand what is going on is high. Below that is an alternative view that conveys far more information compactly, and the EMD falls out immediately as the average of the spread profile: at each percentile, the highest site minus the lowest. The larger the EMD, the larger the spread between sites, and sites that operate identically, that is, fungible sites, have EMD zero. The uniformity control moves the sites toward that zero; raising all output equally leaves the EMD unchanged.</p><p>An advanced topic further down covers a surprising and nice fact about EMD in this setting: it combines cleanly across reporting periods. A short bibliography at the end points to related work.</p></div>
 <section class="overview"><h2>Production levels</h2><p class="section-note">Daily widget output by site · 100 illustrative days each</p><div class="table-wrap"><table><caption class="sr">All sites, comparison inclusion status, daily observation count and production summaries in widgets per day</caption><thead><tr><th scope="col">Site</th><th scope="col">Days</th><th scope="col">Average</th><th scope="col">P10</th><th scope="col">P50</th><th scope="col">P90</th></tr></thead><tbody id="summary-body"></tbody></table></div><p>Each day has equal weight within its site. P50 is the median, the 50th-percentile value.</p></section>
@@ -80,10 +80,10 @@
     howpublished = {Experimental Mathematics, \url{https://jeff-kline.github.io/posts/measuring-site-fungibility/}},
     month = sep,
     year = {2026},
-    note = {Version 1.6}
+    note = {Version 1.7}
 }</pre></div></section>
 
-<footer>Experimental Mathematics · Jeff Kline · © 2026<br>No uploads, external services, or saved browser data.</footer>
+<footer>Experimental Mathematics · Jeff Kline · © 2026<br>This page runs entirely in your browser: it loads nothing from other sites, sends nothing anywhere, and stores nothing.</footer>
 </main>
 <script id="math-engine">
 const ProductionMath = (() => {
