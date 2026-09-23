@@ -35,7 +35,7 @@
 <main>
 <p class="eyebrow">Operations research · Systems thinking</p>
 <h1>How fungible are the sites in a&nbsp;network?</h1>
-<p class="publication-meta">Published <time datetime="2026-09-19">September 19, 2026</time> · Updated <time datetime="2026-09-23">September 23, 2026</time> · Version 1.11</p>
+<p class="publication-meta">Published <time datetime="2026-09-19">September 19, 2026</time> · Updated <time datetime="2026-09-23">September 23, 2026</time> · Version 1.12</p>
 
 <div class="intro"><p>Years ago, a problem at work led me into the mathematics of comparing distributions across a network. I was surprised that I’d never seen a simple and clear way to describe this comparison. It turned out to have an elegant answer: a generalized form of the Earth Mover’s Distance (EMD). I published <a href="https://doi.org/10.1016/j.dam.2019.02.042" target="_blank" rel="noopener noreferrer">a math paper</a>, but moved on from the application. I recently went back to it, and this page is the result. My aim here is to share the core ideas and show how it works.</p><p>The question is general: how uniform are the sites in a network? Think of error rates across servers, throughput across call centers, or production across manufacturing plants. How differently do they operate, and how do we measure those differences? Fungibility supports consistent quality and robustness: work can shift between sites without changing overall output. The interactive plots below illustrate the question with fictional sites producing widgets.</p></div>
 <section class="overview"><h2>Production levels</h2><p class="section-note">Daily widget output by site · 100 illustrative days each</p><div class="table-wrap"><table><caption class="sr">All sites, comparison inclusion status, daily observation count and production summaries in widgets per day</caption><thead><tr><th scope="col">Site</th><th scope="col">Days</th><th scope="col">Average</th><th scope="col">P10</th><th scope="col">P50</th><th scope="col">P90</th></tr></thead><tbody id="summary-body"></tbody></table></div><p>Each day has equal weight within its site. P50 is the median, the 50th-percentile value.</p></section>
@@ -69,7 +69,7 @@
 <div class="table-wrap time-summary"><table><caption class="sr">Average spread over time in widgets per day</caption><thead><tr><th>Average spread (EMD)</th><th>Widgets / day</th></tr></thead><tbody id="period-summary"></tbody></table></div><p id="pool-message" aria-live="polite"></p>
 </section>
 <div class="reading-note"><p>EMD is a deep topic, and this page explores one narrow part of it. I believe these examples illustrate the original problem of site uniformity and how EMD can measure it. The interactive plots help build intuition for that connection. AI built the interactive elements and helped develop the examples.</p></div>
-<section class="time-study prose-section" aria-labelledby="bib-title"><h2 id="bib-title">Further reading</h2><div class="content"><p>The first three entries are mine: the mathematics on this page and its reference code. The rest are background and adjacent work.</p><ol class="bibliography">
+<section class="time-study prose-section" aria-labelledby="bib-title"><h2 id="bib-title">Further reading</h2><div class="content"><ol class="bibliography">
 <li>J. Kline, <em>Properties of the d-dimensional earth mover’s problem</em>, Discrete Applied Mathematics 265 (2019), 128–141. <a href="https://doi.org/10.1016/j.dam.2019.02.042" target="_blank" rel="noopener noreferrer">doi:10.1016/j.dam.2019.02.042</a>. The multi-site EMD, its properties, and Minkowski additivity.</li>
 <li>J. Kline, <a href="https://github.com/jeff-kline/GEM" target="_blank" rel="noopener noreferrer"><em>GEM</em></a>, reference code for the 2019 paper, GitHub (2024). A single-phase greedy algorithm that solves the primal and dual problems together.</li>
 <li>J. Kline, <a href="https://github.com/jeff-kline/range-emd-converse" target="_blank" rel="noopener noreferrer"><em>Prefix-width rigidity and dual geometry of multi-marginal earth moving</em></a>, version 0.1.0 (September 2026). <a href="https://doi.org/10.5281/zenodo.22675435" target="_blank" rel="noopener noreferrer">doi:10.5281/zenodo.22675435</a>. The percentile formula used here, with verification code.</li>
@@ -79,13 +79,13 @@
 <li>M. Queyranne, F. Spieksma and F. Tardella, <em>A general class of greedily solvable linear programs</em>, Mathematics of Operations Research 23(4) (1998), 892–908. <a href="https://doi.org/10.1287/moor.23.4.892" target="_blank" rel="noopener noreferrer">doi:10.1287/moor.23.4.892</a>. Background on Monge costs, under which greedy matching is optimal.</li>
 <li>S. Ferson, V. Kreinovich, L. Ginzburg, D. S. Myers and K. Sentz, <em>Constructing probability boxes and Dempster-Shafer structures</em>, Sandia National Laboratories (2003). <a href="https://www.cs.utep.edu/vladik/2003/sandia03.pdf" target="_blank" rel="noopener noreferrer">cs.utep.edu/vladik/2003/sandia03.pdf</a>. Lower and upper envelopes of cumulative distributions, the same curves that bound the shaded band above, studied as probability boxes.</li>
 </ol></div></section>
-<section class="time-study prose-section" aria-labelledby="cite-title"><h2 id="cite-title">How to cite</h2><div class="content"><p>Jeff Kline, “How fungible are the sites in a network?” Experimental Mathematics, September 19, 2026; revised September 23, 2026, version 1.11. <a href="https://jeff-kline.github.io/posts/measuring-site-fungibility/">jeff-kline.github.io/posts/measuring-site-fungibility/</a></p></div><pre class="citation-code"><code>@misc{kline2026fungibility,
+<section class="time-study prose-section" aria-labelledby="cite-title"><h2 id="cite-title">How to cite</h2><div class="content"><p>Jeff Kline, “How fungible are the sites in a network?” Experimental Mathematics, September 19, 2026; revised September 23, 2026, version 1.12. <a href="https://jeff-kline.github.io/posts/measuring-site-fungibility/">jeff-kline.github.io/posts/measuring-site-fungibility/</a></p></div><pre class="citation-code"><code>@misc{kline2026fungibility,
     author = {Jeff Kline},
     title = {How fungible are the sites in a network?},
     howpublished = {Experimental Mathematics, \url{https://jeff-kline.github.io/posts/measuring-site-fungibility/}},
     month = sep,
     year = {2026},
-    note = {Version 1.11, revised September 23, 2026}
+    note = {Version 1.12, revised September 23, 2026}
 }</code></pre></section>
 <footer>© 2026 Jeff Kline. All rights reserved.<br>This page runs entirely in your browser: it loads nothing from other sites, sends nothing anywhere, and stores nothing.</footer>
 </main>
