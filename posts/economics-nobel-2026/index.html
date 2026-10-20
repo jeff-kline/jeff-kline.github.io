@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stabilizing the economy through expectations | Experimental Mathematics</title>
+<meta name="description" content="An interactive model I built to understand the 2026 Nobel Prize in economics: how a promise about future interest rates can change spending today.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2326352e'/%3E%3Cpath d='M5 12H11V22H17V16H27' stroke='%23c49d61' fill='none' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light;--paper:#f7f2e9;--ink:#26352e;--muted:#526157;--rule:#c8c2b2;--accent:#8f392f;--harbor:#355f70;--compare:#6f7d68;--band:#dedfce;--band-light:#ebe8dc;--panel:#fdfbf6;--sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 var(--sans)}button,input{font:inherit;accent-color:var(--accent)}button,summary{cursor:pointer}a{color:var(--accent);text-underline-offset:3px}a:hover{color:var(--ink)}:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.shell,main{width:min(1180px,calc(100% - 48px));margin:auto}.site-header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0 17px;border-bottom:1px solid var(--ink)}.wordmark{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--ink)}.wordmark:before{content:"";width:6px;height:6px;background:var(--accent)}.site-status{font-size:12px;color:var(--muted)}
+main{padding:28px 0 30px}.eyebrow{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin:0 0 10px}h1{font-size:clamp(25px,3vw,36px);line-height:1.2;letter-spacing:-.8px;margin:0 0 12px;font-weight:700}h2{font-size:22px;margin:0 0 8px}.publication-meta{color:var(--muted);font-size:14px;margin:0 0 20px}
+.prose{max-width:70ch}.prose p{margin:0 0 12px}.part{margin-top:36px}
+.workspace{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;align-items:start;margin:22px 0}.controls{padding:18px 22px 0 0;border-top:2px solid var(--accent);border-right:1px solid var(--rule)}.controls fieldset{border:0;margin:0 0 18px;padding:0}.controls legend{display:block;font-weight:650;margin-bottom:8px;font-size:14px;padding:0}.choice{display:flex;align-items:center;gap:10px;min-height:32px;font-size:14px}.choice input{width:16px;height:16px;margin:0;flex-shrink:0}.control-note{font-size:13px;color:var(--muted);margin:6px 0 18px}.shift-label{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:650}.shift-label output{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:400}input[type=range]{width:100%;min-height:30px}.controls button{border:1px solid var(--rule);background:transparent;border-radius:0;color:var(--ink);padding:8px 12px;font-size:13px;margin-bottom:18px}.controls button:hover{background:#ebe5da}
+.report{min-width:0;border-top:2px solid var(--ink)}.chart{width:100%;display:block}.chart text{font:12px var(--sans);fill:var(--muted)}.chart .direct{fill:var(--ink);font-weight:600}.chart .panel-title{fill:var(--ink);font-weight:650}.readout{font-size:14px;margin:12px 0 0;min-height:3em;max-width:70ch}.legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:13px;color:var(--muted);margin:10px 0 0}.legend span{display:flex;align-items:center;gap:8px}.key{width:26px;flex-shrink:0;border-top:3px solid var(--accent)}.key.income{border-color:var(--harbor);border-top-width:2px}.key.compare{border-color:var(--compare);border-top-style:dashed;border-top-width:2px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 18px;padding:12px 0;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}.report>.metrics{margin-bottom:10px}.metrics div{min-width:0;display:flex;flex-direction:column;justify-content:flex-end}.metrics strong{display:block;font-size:24px;line-height:1.15;color:var(--accent);font-weight:600;letter-spacing:-.5px}.metrics span{display:block;font-size:12px;color:var(--muted)}
+.step h3{font-size:20px;margin:0 0 10px}.step p{margin:0 0 12px}.step-number{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;margin:0 0 6px}.step[hidden]{display:none}.causal-chain{padding-left:1.4em;margin:12px 0}.causal-chain li{margin-bottom:12px}.story-paging button{background:transparent;border:1px solid var(--rule);color:var(--ink);padding:10px 12px;min-height:44px;font-size:13px}.story-paging button:hover{border-color:var(--ink)}.steps{max-width:70ch;margin-top:20px}.story-paging{display:flex;justify-content:space-between;gap:12px;margin-top:6px;max-width:70ch}.story-paging button:disabled{opacity:.45;cursor:default}.model-note{font-size:13px;color:var(--muted);margin:10px 0}.source-code{font:12px/1.6 ui-monospace,SFMono-Regular,monospace;overflow:auto;max-height:420px;padding:12px 0}
+.household-comparison{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;padding-top:6px}.household-comparison>div{min-width:0}.household-comparison h3{font-size:15px;line-height:1.4;margin:0 0 8px}.household-result{margin:0 0 6px}.household-result strong{display:block;color:var(--accent);font-size:22px;line-height:1.25;font-variant-numeric:tabular-nums}.household-result span{font-size:12px;color:var(--muted)}.prose h3{font-size:18px;margin:24px 0 10px}
+.caveats{max-width:70ch;padding-left:1.2em}.caveats li{margin:0 0 10px}
+details{border-top:1px solid var(--rule);margin-top:26px;padding-top:16px}summary{font-weight:600;font-size:14px}details .content{font-size:14px;color:var(--muted);max-width:70ch}.formula{color:var(--ink);margin:16px 0;overflow-x:auto}.formula math{font-family:"STIX Two Math","Cambria Math",math;font-size:1.1rem}
+.bibliography{margin:0;padding-left:1.4em;font-size:14px;color:var(--muted);max-width:850px}.bibliography li{margin:0 0 10px}.bibliography em{color:var(--ink)}.bibliography a,.caveats a{overflow-wrap:anywhere}
+footer{border-top:1px solid var(--rule);padding-top:16px;color:var(--muted);font-size:12px;margin-top:28px}
+
+.workspace.experiment{row-gap:12px;scroll-margin-top:8px}.experiment>.report{grid-column:1/-1}.explanation{min-width:0;padding-top:12px}.explanation .steps{margin-top:0}.explanation .readout{margin-top:0;min-height:0}.experiment>.controls{padding-top:12px}.experiment .controls fieldset:last-child{margin-bottom:0}#quick-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#story-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+.compact-choices,.chart-choice{display:none}.compact-choices label,.chart-choice label{display:block;font-weight:650;font-size:14px;margin-bottom:4px}.controls select{font:inherit;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:0;width:100%;min-height:40px;padding:6px}.compact-choices select+label{margin-top:10px}.policy-controls>div{margin-bottom:10px}.policy-controls input[type=range]{display:block;margin:0;min-height:32px}.policy-controls button{margin:6px 0 0;padding:6px 12px;min-height:36px}.policy-controls .choice{align-items:flex-start}.policy-controls .choice input{margin-top:3px}.chart-choice{margin-bottom:10px}
+@media(max-height:699px){.controls fieldset{display:none}.compact-choices{display:block}}
+@media(min-width:621px) and (max-width:850px){.workspace.experiment{grid-template-columns:200px minmax(0,1fr);column-gap:24px}.experiment>.controls{padding-right:16px}}
+@media(max-width:620px){.workspace.experiment{grid-template-columns:1fr;gap:12px}.experiment>.controls{border-right:0;padding:10px 0 0}.experiment>.explanation{padding-top:0}.controls fieldset{display:none}.compact-choices,.chart-choice{display:block}.household-comparison{grid-template-columns:1fr;gap:12px}.household-comparison>div+div{border-top:1px solid var(--rule);padding-top:10px}.household-comparison h3{margin-bottom:4px}.household-result strong{font-size:20px}.household-result span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.household-result{margin-bottom:4px}.metrics{padding:8px 0;gap:8px 12px;grid-template-columns:repeat(2,minmax(0,1fr))}.metrics strong{font-size:20px}.report>.metrics{margin-bottom:8px}.policy-controls{display:grid;grid-template-columns:1fr 1fr;column-gap:18px}.policy-controls>.chart-choice,.policy-controls>div:last-child{grid-column:1/-1}.policy-controls>div:last-child{display:flex;align-items:center;gap:12px;justify-content:space-between}.policy-controls .choice{align-items:center}.policy-controls .choice input{margin-top:0}.policy-controls button{margin:0}.policy-controls .shift-label{display:block}.policy-controls .shift-label output{display:block}.policy-controls>div{margin-bottom:6px}.policy-controls>div:nth-last-child(2){grid-column:1/-1}.policy-controls>div:nth-last-child(2) .shift-label{display:flex}}
+@media(max-width:520px){.shell,main{width:calc(100% - 32px)}.site-header{gap:12px;padding:15px 0}.wordmark{font-size:9px;letter-spacing:.1em}.site-status{font-size:11px}main{padding-top:18px}h1{font-size:26px}.publication-meta{font-size:12px;margin-bottom:12px}.formula math{font-size:1rem}}
+.chart-layout{display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-top:22px;font-size:12px;color:var(--muted)}.chart-layout select{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:0;min-height:32px;padding:4px 24px 4px 8px}.chart-layout+.experiment{margin-top:8px}.experiment[data-width="compact"],.chart-layout[data-width="compact"]{max-width:720px}.experiment[data-width="medium"],.chart-layout[data-width="medium"]{max-width:900px}
+@media(max-width:850px){.chart-layout{display:none}.workspace.experiment{max-width:none;margin-top:22px}}
+.workspace.experiment{background:var(--panel);border:1px solid var(--rule);padding:16px 24px 24px;margin:24px 0 28px}.experiment>.chart-layout{grid-column:1/-1;margin:0}.experiment select{background:var(--panel)}
+@media(max-width:850px){.workspace.experiment{margin-top:24px}}
+@media(max-width:620px){.workspace.experiment{padding:12px 14px 16px}}
+</style>
+</head>
+<body>
+<header class="site-header shell"><a class="wordmark" href="../../">Experimental Mathematics</a><span class="site-status">Jeff Kline · Interactive</span></header>
+<main>
+    <p class="eyebrow">Economics Nobel 2026 · Explored with AI</p>
+    <h1>Stabilizing the economy through&nbsp;expectations</h1>
+    <p class="publication-meta">Published <time datetime="2026-10-20">October 20, 2026</time> · Version 1.0</p>
+    <div class="prose">
+        <p>A central bank can help stabilize the economy through expectations. Even when today’s interest rate can’t go any lower, a promise about what the bank will do later can raise spending now, if people believe it. That is a result of the models behind this year’s Nobel Prize in economics, awarded to Robert E. Hall and Michael Woodford. In those models it works because households and firms plan ahead, so their expectations about the future affect their spending now.</p>
+        <p>I have no background in economics, and I had no intuition for why that should work. I was curious about the mechanism and wanted a plausible explanation, along with a hands-on feel for it: change the model’s settings and see what happens. This page came from working with AI to interpret the result, and it’s an exercise for me to learn a bit about the theory. The interactive charts are computed from the models, whose <a href="#model">math</a> and code are written out below; the original sources are <a href="#bib-title">at the end</a>.</p>
+        <p>Here is the case I started with: a recession is bad enough that the central bank has already cut its rate to zero, the floor in this model. It can’t cut any further, so it promises to keep the rate at zero for a while <em>after</em> the slump ends. Today’s rate is the same either way. Does the slump get smaller?</p>
+    </div>
+
+    <section class="workspace experiment" id="quick-experiment" data-width="compact" aria-label="Try a promise about future interest rates">
+        <div class="chart-layout" data-width="compact">
+            <label for="quick-width">Chart width</label>
+            <select id="quick-width" data-width-for="quick-experiment" aria-label="Opening experiment chart width" aria-controls="quick-experiment">
+                <option value="compact" selected>Compact</option>
+                <option value="medium">Medium</option>
+                <option value="full">Full width</option>
+            </select>
+        </div>
+        <div class="report">
+            <div class="metrics" id="quick-metrics"></div>
+            <div id="quick-chart"></div>
+            <div class="legend"><span><i class="key"></i><span id="quick-series">No extra time at zero</span></span><span id="quick-compare"><i class="key compare"></i>No extra time at zero</span></div>
+        </div>
+        <aside class="controls" aria-label="Promise choices">
+            <div class="compact-choices"><label for="quick-choice">What does the bank promise?</label><select id="quick-choice" data-radio="quick" aria-controls="quick-chart quick-readout"><option value="none">No extra time at zero</option><option value="promise">One extra year at zero</option><option value="doubt">Same promise, doubted until kept</option></select></div>
+            <fieldset>
+            <legend>What does the bank promise?</legend>
+            <label class="choice"><input type="radio" name="quick" value="none" checked>No extra time at zero</label>
+            <label class="choice"><input type="radio" name="quick" value="promise">One extra year at zero</label>
+            <label class="choice"><input type="radio" name="quick" value="doubt">Same promise, doubted until kept</label>
+            </fieldset>
+        </aside>
+        <div class="explanation prose">
+            <p class="readout" id="quick-readout" aria-live="polite"></p>
+            <p class="control-note">In all three: the same 18-month slump, with the rate at zero throughout.</p>
+            <p class="model-note">Illustrative model results. Models like this one make promises too powerful, and the size of the effect depends on assumptions I chose. <a href="#limits-title">See the limits.</a></p>
+        </div>
+    </section>
+
+    <section class="part" aria-labelledby="prize-title">
+        <h2 id="prize-title">What this has to do with the Nobel Prize</h2>
+        <div class="prose">
+            <p>Robert E. Hall and Michael Woodford won for connecting the decisions of households and firms to central-bank policy. Hall showed how to test whether households respond to news about their income the way a careful planner would. Woodford built models that combine households’ spending with firms’ pricing, and used them to ask what a central bank should do.</p>
+            <p>The explanation starts with a single household deciding what to spend. This textbook example follows one thread of that work, <em>forward guidance</em>: changing spending today by changing what people expect the bank to do later. The prize covers much more. The <a href="https://www.nobelprize.org/uploads/2026/10/popular-economicsciencesprize2026.pdf" target="_blank" rel="noopener noreferrer">Academy’s introduction</a> tells the wider story.</p>
+            <p>The result depends on people believing what the bank will do later. The <a href="https://www.nobelprize.org/uploads/2026/10/advanced-economicsciencesprize2026.pdf" target="_blank" rel="noopener noreferrer">Academy’s scientific background</a> notes that the model presumes an independent central bank, or at least one able to commit to a rule, though the analysis itself does not require independence. The older argument for independence comes from <a href="https://doi.org/10.1086/260580" target="_blank" rel="noopener noreferrer">Kydland and Prescott</a>’s work on why commitments are hard to keep, which won the 2004 prize.</p>
+        </div>
+    </section>
+
+    <section class="part" aria-labelledby="hall-title">
+        <h2 id="hall-title">A raise—or a pay cut?</h2>
+        <div class="prose">
+            <p>Suppose that at 35 you learn your pay will rise by $10,000 a year starting at 40. Would you spend more now, or wait for the money? And if the news were a pay cut of the same size, would you cut back now?</p>
+            <p>A simple way to see the idea behind Hall’s test is a planner who spreads what they expect to earn evenly over the rest of their life. For that planner the answer is the same either way: spending moves as soon as the news arrives, years before the paycheck changes, and a pay cut lowers it by as much as a raise lifts it.</p>
+            <p>The chart below shows this for someone who, without the change, earns $50,000 a year from 25 to 64 and then $20,000 through 85. Each line is a change from that original plan: red for the planner’s spending, blue for income. Someone who spends each paycheck as it arrives would follow the blue line.</p>
+        </div>
+        <div class="workspace experiment" id="household-experiment" data-width="medium">
+            <div class="chart-layout" data-width="medium">
+                <label for="household-width">Chart width</label>
+                <select id="household-width" data-width-for="household-experiment" aria-label="Income gain chart width" aria-controls="household-experiment">
+                    <option value="compact">Compact</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="full">Full width</option>
+                </select>
+            </div>
+            <div class="report">
+                <div class="household-comparison">
+                    <div>
+                        <h3 id="gain-title">An income gain</h3>
+                        <p class="household-result"><strong id="gain-spending"></strong><span>change in the planner’s yearly spending</span></p>
+                        <div id="household-chart"></div>
+                    </div>
+                </div>
+                <div class="legend"><span><i class="key"></i>Change in planned spending</span><span><i class="key income"></i>Change in income</span></div>
+            </div>
+            <aside class="controls" aria-label="Income gain controls">
+                <div class="compact-choices"><label for="event-choice">Income change at age 40</label><select id="event-choice" data-radio="event" aria-controls="household-chart"><option value="bonus">$10,000 once</option><option value="raise" selected>$10,000 a year until retirement</option></select><label for="lead-choice">When the news arrives</label><select id="lead-choice" data-radio="lead" aria-controls="household-chart"><option value="0">At 40, without warning</option><option value="5" selected>At 35, five years ahead</option></select></div>
+                <fieldset>
+                    <legend>Income change at age 40</legend>
+                    <label class="choice"><input type="radio" name="event" value="bonus">$10,000 once</label>
+                    <label class="choice"><input type="radio" name="event" value="raise" checked>$10,000 a year until retirement</label>
+                </fieldset>
+                <fieldset>
+                    <legend>When the news arrives</legend>
+                    <label class="choice"><input type="radio" name="lead" value="0">At 40, without warning</label>
+                    <label class="choice"><input type="radio" name="lead" value="5" checked>At 35, five years ahead</label>
+                </fieldset>
+            </aside>
+            <div class="explanation prose">
+                <p class="readout" id="household-readout" aria-live="polite"></p>
+                <p class="model-note">Model predictions. Zero means no change from the original plan; a loss of the same size gives the mirror image.</p>
+                <p>Spending can move before income because the planner has savings. Before a known raise, the planner saves less; before a known pay cut, they save more. Someone without savings or credit may have to wait for the raise before spending more, but cutting back ahead of a loss needs no lender’s permission. Over a lifetime, each household in this example spends exactly what it earns.</p>
+            </div>
+        </div>
+        <div class="prose">
+            <h3>What Hall tested</h3>
+            <p>Friedman and Modigliani developed the idea of spreading income over a lifetime in the 1950s. Hall’s 1978 paper gave it a test: under his simplifying assumptions, information people already have should not predict their next change in spending. Only news can change the plan.</p>
+            <p>Hall and Mishkin’s 1982 study fitted a model to families’ food spending. In their estimate, about 80% of that spending followed lifetime income and the rest tracked current income. That is an estimate from their model and sample, not a fixed split in the population. Living paycheck to paycheck can reflect a lack of savings or credit.</p>
+            <p>As a separate illustration, suppose 80% of households follow the planner’s rule and 20% spend each paycheck as it arrives. Then an unexpected one-time $10,000 gain at 40 raises average spending that year by about <span data-fact="mix">$2,200</span>. That number is a model calculation, not their empirical result.</p>
+        </div>
+    </section>
+
+    <section class="part" aria-labelledby="story-title">
+        <h2 id="story-title">Steering through a slump</h2>
+        <div class="prose"><p>Woodford’s model puts planners like the one above into a whole economy, along with firms that change their prices only now and then. Below are five scenarios for the same slump as the opening experiment, each with a different policy. From scenario 2 on, a dashed line shows another scenario for comparison, and the legend names it. Output is everything the economy produces; zero means its normal level.</p></div>
+        <div class="workspace experiment" id="story-experiment" data-width="medium">
+            <div class="chart-layout" data-width="medium">
+                <label for="story-width">Chart width</label>
+                <select id="story-width" data-width-for="story-experiment" aria-label="Slump scenarios chart width" aria-controls="story-experiment">
+                    <option value="compact">Compact</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="full">Full width</option>
+                </select>
+            </div>
+            <div class="report">
+                <div class="metrics" id="story-metrics"></div>
+                <div id="story-chart"></div>
+                <div class="legend"><span><i class="key"></i><span id="story-series"></span></span><span id="story-compare"><i class="key compare"></i><span id="story-compare-name"></span></span></div>
+            </div>
+            <aside class="controls" aria-label="Scenario choices">
+                <div class="compact-choices"><label for="scenario-choice">Scenario</label><select id="scenario-choice" data-radio="scenario" aria-controls="story-chart"><option value="0">1. Hold rates</option><option value="1">2. Cut to zero</option><option value="2">3. Promise a year</option><option value="3">4. Promise too much</option><option value="4">5. Doubted until kept</option></select></div>
+                <fieldset>
+                    <legend>Scenario</legend>
+                    <label class="choice"><input type="radio" name="scenario" value="0" checked aria-controls="step-1">1. Hold rates</label>
+                    <label class="choice"><input type="radio" name="scenario" value="1" aria-controls="step-2">2. Cut to zero</label>
+                    <label class="choice"><input type="radio" name="scenario" value="2" aria-controls="step-3">3. Promise a year</label>
+                    <label class="choice"><input type="radio" name="scenario" value="3" aria-controls="step-4">4. Promise too much</label>
+                    <label class="choice"><input type="radio" name="scenario" value="4" aria-controls="step-5">5. Doubted until kept</label>
+                </fieldset>
+            </aside>
+            <div class="explanation">
+                <div class="steps" aria-live="polite">
+                    <div class="step" id="step-1" role="region" aria-labelledby="step-1-title">
+                        <p class="step-number">Scenario 1 of 5</p><h3 id="step-1-title">A slump begins</h3>
+                        <p>Something makes households cautious, and they spend less. For 18 months, the interest rate that would keep spending at its normal level, called the <em>neutral</em> rate, falls from its usual 1% to −5%. It is a real rate, so it already allows for inflation. Everyone in this example knows when the slump will end.</p>
+                        <p>Suppose the bank leaves its rate at its normal 3%. In these conditions saving pays too well and borrowing costs too much. Spending falls, firms sell less, and at its worst output is <span data-fact="hold-worst">9.5%</span> below normal. Inflation falls below the 2% target.</p>
+                        <p>This is a slump in demand. An energy shortage or another supply problem would need a different example.</p>
+                    </div>
+                    <div class="step" id="step-2" role="region" aria-labelledby="step-2-title" hidden>
+                        <p class="step-number">Scenario 2 of 5</p><h3 id="step-2-title">Cut to zero</h3>
+                        <p>A lower rate makes borrowing cheaper and saving less rewarding, so the bank cuts to zero, the floor in this model. Output still falls <span data-fact="floor-worst">4.8%</span>. The cut helps, but it isn’t enough.</p>
+                        <p>Zero is not as cheap as it sounds. What matters for spending is the <em>real interest rate</em>: the quoted rate minus expected inflation. If prices are expected to rise 1% over a year, a loan at 0% costs about −1% in what the repaid dollars buy; if prices are expected to fall 1%, it costs about +1%.</p>
+                        <p>That is why zero isn’t low enough here. The neutral rate is −5%, but with the bank’s rate at zero and expected inflation never above 2%, the real rate never falls below −2%, too high to keep spending at its normal level.</p>
+                        <p>People expect the bank to raise its rate as soon as the slump ends. Scenario 3 changes that expectation.</p>
+                    </div>
+                    <div class="step" id="step-3" role="region" aria-labelledby="step-3-title" hidden>
+                        <p class="step-number">Scenario 3 of 5</p><h3 id="step-3-title">Promise one more year</h3>
+                        <p>The bank promises one more year at zero after the slump ends. The dashed line is scenario 2. <strong>During the slump the rate is zero in both.</strong> The promise works through two expectations.</p>
+                        <ol class="causal-chain">
+                            <li><strong>Higher future income.</strong> Low rates after the slump mean more spending then, so more sales and more income. Like the planner in the household example, people who expect to be better off spend more now, using savings or a loan.</li>
+                            <li><strong>Higher future prices.</strong> Stronger demand pushes up costs and prices. Firms that keep a price fixed for a while set it with future costs in mind, so prices start rising sooner. With the bank’s rate at zero and prices expected to rise, a loan is repaid in dollars that buy less. That lowers the real cost of borrowing, which also encourages spending now.</li>
+                        </ol>
+                        <p>New spending becomes someone else’s income, which adds to the effect. The worst quarter is now <span data-fact="promise-worst">0.8%</span> below normal. Output rises above normal before the slump is over and peaks just after it ends. Inflation peaks earlier, during the slump, at <span data-fact="promise-peak">2.5%</span>. The bank keeps its rate at zero through the boom, as promised.</p>
+                        <p class="model-note">The model solves these effects together. It assumes people believe the promise and act on income they expect later. In scenario 5, people believe the promise only once it takes effect; <a href="#limits-title">the limits</a> discuss the evidence on the second.</p>
+                    </div>
+                    <div class="step" id="step-4" role="region" aria-labelledby="step-4-title" hidden>
+                        <p class="step-number">Scenario 4 of 5</p><h3 id="step-4-title">Promise too much</h3>
+                        <p>Now promise two and a half years. In this model the slump disappears, but a boom replaces it: output rises up to <span data-fact="long-boom">8.8%</span> above normal, and inflation peaks at <span data-fact="long-peak">5.6%</span>.</p>
+                        <p>This promise overshoots. The bank has to hold its rate at zero while inflation runs well above target, which is exactly when it will be tempted to break its word.</p>
+                    </div>
+                    <div class="step" id="step-5" role="region" aria-labelledby="step-5-title" hidden>
+                        <p class="step-number">Scenario 5 of 5</p><h3 id="step-5-title">If people doubt it until it’s kept</h3>
+                        <p>Go back to the one-year promise, but suppose people doubt it until it takes effect. During the slump they expect the bank to raise its rate as soon as the slump ends, so they don’t change their plans, and output still falls <span data-fact="doubt-worst">4.8%</span>. The dashed line is scenario 3, where people believed the same promise from the start.</p>
+                        <p>When the slump ends, the bank keeps its rate at zero, as promised. Now people see that the promise is real, believe the rest of it, and start spending. The result is a boom after the shortfall is over, without the earlier help. The longer the promise, the bigger the boom.</p>
+                        <p>Here belief is an on/off switch: a promise helps today only if it changes what people expect today. Real doubt comes in degrees, and a firm can believe a promise and still wait; <a href="#limits-title">the limits</a> say more.</p>
+                    </div>
+                </div>
+                <div class="story-paging"><button type="button" id="previous-step">Previous scenario</button><button type="button" id="next-step">Next scenario</button></div>
+                <p class="model-note">Illustrative model results. The chart scales stay fixed across all five scenarios.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="part" aria-labelledby="sandbox-title">
+        <h2 id="sandbox-title">The general model: set your own policy</h2>
+        <div class="prose"><p>Here is the general model, with more settings to change and test: the size of the slump, the bank’s rate during it, how long the promise lasts, and whether people believe it. One goal of a central bank is holding inflation steady; other goals can also drive its policy. The dashed line is always the slump you chose, with the bank holding its rate at 3%.</p></div>
+        <div class="workspace experiment" id="sandbox-experiment" data-width="medium">
+            <div class="chart-layout" data-width="medium">
+                <label for="sandbox-width">Chart width</label>
+                <select id="sandbox-width" data-width-for="sandbox-experiment" aria-label="Policy sandbox chart width" aria-controls="sandbox-experiment">
+                    <option value="compact">Compact</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="full">Full width</option>
+                </select>
+            </div>
+            <div class="report">
+                <div class="metrics" id="sandbox-metrics"></div>
+                <div id="sandbox-chart"></div>
+                <div class="legend"><span><i class="key"></i>Your policy</span><span><i class="key compare"></i>Holding the rate at 3%</span></div>
+            </div>
+            <aside class="controls policy-controls" aria-label="Central bank controls">
+                <div class="chart-choice"><label for="sandbox-view">Show chart</label><select id="sandbox-view" aria-controls="sandbox-chart"><option value="output">Output compared with normal</option><option value="rate">Bank’s quoted interest rate</option><option value="inflation">Inflation</option></select></div>
+                <div><div class="shift-label"><label for="slump">Size of the slump</label><output id="slump-value"></output></div><input type="range" id="slump" min="1" max="8" step="1" value="6"></div>
+                <div><div class="shift-label"><label for="cut">Rate during the slump</label><output id="cut-value"></output></div><input type="range" id="cut" min="0" max="3" step=".25" value="0"></div>
+                <div><div class="shift-label"><label for="promise">Promise to hold it</label><output id="promise-value"></output></div><input type="range" id="promise" min="0" max="12" step="1" value="4"></div>
+                <div><label class="choice"><input type="checkbox" id="believed" checked>People believe the promise from the start</label><button type="button" id="reset">Reset</button></div>
+            </aside>
+            <div class="explanation prose">
+                <p><strong>Size of the slump:</strong> the drop in the neutral real rate, in percentage points, for 18 months.</p>
+                <p><strong>Rate during the slump:</strong> the quoted annual rate. 3% is normal; zero is the floor here.</p>
+                <p><strong>Promise to hold it:</strong> extra quarters at that rate after the slump ends.</p>
+                <p>If people don’t believe the promise from the start, they expect normal policy after the slump. When the bank keeps its rate low anyway, they believe the rest of the promise.</p>
+                <p class="model-note">Illustrative model results. The axes stay fixed, so every setting is drawn on the same scale.</p>
+            </div>
+        </div>
+    </section>
+
+<section class="part" aria-labelledby="limits-title">
+<h2 id="limits-title">What the model leaves out</h2>
+<ul class="caveats">
+    <li>The economy model is a cartoon: one kind of household, no banks, no housing, no unemployment. The 2008 crisis began in the financial system, which this model doesn’t have.</li>
+    <li>The economy model gives every household the same ability to spread spending across time. Real households may lack savings or access to credit, so better prospects need not let them spend more today. Models with different kinds of households can give different results: in one by <a href="https://doi.org/10.1257/aer.20150063" target="_blank" rel="noopener noreferrer">McKay, Nakamura and Steinsson</a>, borrowing limits and uninsurable income risk make promises about the distant future much less powerful.</li>
+    <li>The economy model assumes that people spend more today when they expect higher income later, and that they respond to good and bad news alike. The evidence on both points is mixed. In Hall and Mishkin’s estimate, most food spending followed lifetime income. But in the <a href="https://doi.org/10.1093/restud/rdaa076" target="_blank" rel="noopener noreferrer">survey by Fuster, Kaplan and Zafar</a>, people said they would barely spend ahead of a future gain, yet would cut back ahead of a future loss; responses to losses were larger and more common. Short-term credit constraints alone did not explain the difference. These were answers to hypothetical questions about one-time private gains and losses, not observed purchases or interest-rate policy. Evidence on central-bank promises is also mixed. <a href="https://www.ijcb.org/journal/v1n1/do-actions-speak-louder-words-response-asset-prices-monetary-policy-actions-and" target="_blank" rel="noopener noreferrer">Gürkaynak, Sack and Swanson</a> find that the Federal Reserve’s statements moved long-term interest rates more than its rate changes did. In a survey experiment by <a href="https://doi.org/10.1093/jeea/jvad003" target="_blank" rel="noopener noreferrer">Coibion, Georgarakos, Gorodnichenko and Weber</a>, though, information about rates more than a year ahead did not further change households’ forecasts.</li>
+    <li>Promises are too powerful in this model. Del Negro, Giannoni and Patterson showed that in the basic model, announcements about rates far in the future have unreasonably large effects today; this is known as the forward guidance puzzle. I chose a weak response of inflation to output (κ&nbsp;=&nbsp;0.01) to keep the illustration modest. This is a teaching choice, not an estimate fitted to an economy, and it does not resolve the puzzle. With κ&nbsp;=&nbsp;0.1, ten times larger, the same one-year promise in scenario 3 sends inflation to 21%.</li>
+    <li>There is no investment in machines and no uncertainty about how long the slump lasts. A firm can believe a promise and still wait: if trade rules or taxes might change, delaying an expensive machine that is hard to resell can be worth it. <a href="https://doi.org/10.1111/j.1467-937X.2007.00426.x" target="_blank" rel="noopener noreferrer">Bloom, Bond and Van Reenen</a> find that investment responds less to demand when uncertainty is high. In a trade-policy setting, a credible commitment can also remove a risk: <a href="https://www.aeaweb.org/articles?id=10.1257/pol.20140068" target="_blank" rel="noopener noreferrer">Handley and Limão</a> find that less uncertainty about future trade policy helped Portuguese firms enter export markets after Portugal joined the European Community.</li>
+</ul>
+<details id="model"><summary>The model</summary><div class="content">
+<p>This is the three-equation New Keynesian model as written in the Academy’s scientific background, with time measured in quarters. Here <i>y</i> is the output gap in percent, <i>π</i> inflation, <i>i</i> the policy rate and <i>r</i><sup>n</sup> the neutral rate, all as departures from normal in percentage points per quarter. The charts show rates per year: four times the quarterly departure, plus the normal level. <i>E</i><sub><i>t</i></sub> marks what people expect in quarter <i>t</i> about the next quarter. When a promise is believed, that is what happens; when people doubt it, the two differ until it takes effect.</p>
+<div class="formula"><math display="block"><mrow><msub><mi>y</mi><mi>t</mi></msub><mo>=</mo><msub><mi>E</mi><mi>t</mi></msub><msub><mi>y</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><mfrac><mn>1</mn><mi>σ</mi></mfrac><mo>(</mo><msub><mi>i</mi><mi>t</mi></msub><mo>−</mo><msub><mi>E</mi><mi>t</mi></msub><msub><mi>π</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>−</mo><msubsup><mi>r</mi><mi>t</mi><mi>n</mi></msubsup><mo>)</mo></mrow></math></div>
+<div class="formula"><math display="block"><mrow><msub><mi>π</mi><mi>t</mi></msub><mo>=</mo><mi>β</mi><msub><mi>E</mi><mi>t</mi></msub><msub><mi>π</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>+</mo><mi>κ</mi><msub><mi>y</mi><mi>t</mi></msub></mrow></math></div>
+<div class="formula"><math display="block"><mrow><msub><mi>i</mi><mi>t</mi></msub><mo>=</mo><msub><mi>ϕ</mi><mi>π</mi></msub><msub><mi>π</mi><mi>t</mi></msub><mo>+</mo><msub><mi>ϕ</mi><mi>y</mi></msub><msub><mi>y</mi><mi>t</mi></msub></mrow></math></div>
+<p>I use σ&nbsp;=&nbsp;1, β&nbsp;=&nbsp;0.99 and κ&nbsp;=&nbsp;0.01. The usual textbook β and the 1% normal real rate are separate illustrative choices, not a calibrated pair. The rule uses Taylor’s 1.5 and 0.5, stated on annual rates. During the slump and any promise, the rule is replaced by the chosen rate. The rule never goes below the floor. Once the slump starts, everyone knows how long it will last. I solve the 60-quarter path as one linear system, with the economy back to normal at the end, and recheck which quarters the floor binds until the answer stops changing. A promise people doubt until it takes effect is solved twice: first with people expecting the usual rule after the slump, then again from the end of the slump, when the bank keeps its promise and people believe the rest of it. The output shortfall adds up the quarters below normal, as a share of a normal year’s output; a later boom does not offset it.</p>
+</div></details>
+</section>
+
+<details id="source"><summary>Read the JavaScript solver</summary><div class="content"><p>The model runs locally in plain JavaScript. The code below is the same engine used by every experiment on this page. It solves the spending and inflation equations together, subject to the chosen policy and the interest-rate floor.</p><pre class="source-code"><code id="solver-source"></code></pre></div></details>
+
+<details id="review"><summary>How this page was checked</summary><div class="content"><p>Before publishing, I had separate AI reviewers check the work. One rebuilt the solver independently and compared it with this page at all 2,704 slider settings; another checked the text against the cited papers. They found eight corrections, which are applied here. These were AI reviews, not review by an economist, and they check that the page computes its stated model, not that the model describes a real economy. <a href="../research-program/">A public standard for this work</a> describes how I check AI-assisted work.</p></div></details>
+
+<div class="prose part"><p>I directed this work, using AI to read the background papers, build the models and draft text. I rejected early versions, asked for major changes, and edited the writing for accuracy and voice. This is an attempt to understand existing work, not new research. Where a summary here and a source below disagree, trust the source.</p></div>
+
+<section class="part" aria-labelledby="bib-title">
+<h2 id="bib-title">Further reading</h2>
+<ol class="bibliography">
+<li>Royal Swedish Academy of Sciences, <a href="https://www.nobelprize.org/uploads/2026/10/popular-economicsciencesprize2026.pdf" target="_blank" rel="noopener noreferrer"><em>Microfoundations deliver macro insights</em></a>, popular science background, October 2026. The best short account of the prize.</li>
+<li>Royal Swedish Academy of Sciences, <a href="https://www.nobelprize.org/uploads/2026/10/advanced-economicsciencesprize2026.pdf" target="_blank" rel="noopener noreferrer"><em>Microeconomic foundations of macroeconomic stabilization</em></a>, scientific background, October 2026. The three equations above, and the forward guidance puzzle.</li>
+<li>F. E. Kydland and E. C. Prescott, <em>Rules rather than discretion: the inconsistency of optimal plans</em>, Journal of Political Economy 85(3) (1977), 473–491. <a href="https://doi.org/10.1086/260580" target="_blank" rel="noopener noreferrer">doi:10.1086/260580</a>. Why a policymaker’s promises can be hard to keep.</li>
+<li>R. E. Hall, <em>Stochastic implications of the life cycle–permanent income hypothesis: theory and evidence</em>, Journal of Political Economy 86(6) (1978), 971–987. <a href="https://doi.org/10.1086/260724" target="_blank" rel="noopener noreferrer">doi:10.1086/260724</a>. A test of whether spending changes can be predicted under the model’s assumptions.</li>
+<li>R. E. Hall and F. S. Mishkin, <em>The sensitivity of consumption to transitory income: estimates from panel data on households</em>, Econometrica 50(2) (1982), 461–481. <a href="https://doi.org/10.2307/1912638" target="_blank" rel="noopener noreferrer">doi:10.2307/1912638</a>. Evidence on food spending and responses to temporary and lasting income changes.</li>
+<li>M. Woodford, <em>Interest and prices: foundations of a theory of monetary policy</em>, Princeton University Press (2003). The full model and its case for rules and communication.</li>
+<li>G. B. Eggertsson and M. Woodford, <a href="https://www.brookings.edu/wp-content/uploads/2003/01/2003a_bpea_eggertsson.pdf" target="_blank" rel="noopener noreferrer"><em>The zero bound on interest rates and optimal monetary policy</em></a>, Brookings Papers on Economic Activity 2003(1). How a credible promise of later low rates can help when the current rate is at its floor.</li>
+<li>M. Del Negro, M. P. Giannoni and C. Patterson, <em>The forward guidance puzzle</em>, Journal of Political Economy Macroeconomics 1(1) (2023), 43–79. Why the basic model makes promises too powerful.</li>
+<li>J. Galí, <em>Monetary policy, inflation, and the business cycle</em>, 2nd edition, Princeton University Press (2015). A textbook treatment of the same model.</li>
+<li>A. Fuster, G. Kaplan and B. Zafar, <em>What would you do with $500? Spending responses to gains, losses, news, and loans</em>, Review of Economic Studies 88(4) (2021), 1760–1795. <a href="https://doi.org/10.1093/restud/rdaa076" target="_blank" rel="noopener noreferrer">doi:10.1093/restud/rdaa076</a>. Survey evidence on different responses to good and bad news.</li>
+<li>A. McKay, E. Nakamura and J. Steinsson, <em>The power of forward guidance revisited</em>, American Economic Review 106(10) (2016), 3133–3158. <a href="https://doi.org/10.1257/aer.20150063" target="_blank" rel="noopener noreferrer">doi:10.1257/aer.20150063</a>. How borrowing limits and income risk weaken promises about the distant future.</li>
+<li>R. S. Gürkaynak, B. Sack and E. T. Swanson, <a href="https://www.ijcb.org/journal/v1n1/do-actions-speak-louder-words-response-asset-prices-monetary-policy-actions-and" target="_blank" rel="noopener noreferrer"><em>Do actions speak louder than words? The response of asset prices to monetary policy actions and statements</em></a>, International Journal of Central Banking 1(1) (2005), 55–93. Evidence that the Federal Reserve’s statements about future policy move long-term rates.</li>
+<li>O. Coibion, D. Georgarakos, Y. Gorodnichenko and M. Weber, <em>Forward guidance and household expectations</em>, Journal of the European Economic Association 21(5) (2023), 2131–2171. <a href="https://doi.org/10.1093/jeea/jvad003" target="_blank" rel="noopener noreferrer">doi:10.1093/jeea/jvad003</a>. A survey experiment on how households respond to information about future rates.</li>
+<li>N. Bloom, S. Bond and J. Van Reenen, <em>Uncertainty and investment dynamics</em>, Review of Economic Studies 74(2) (2007), 391–415. <a href="https://doi.org/10.1111/j.1467-937X.2007.00426.x" target="_blank" rel="noopener noreferrer">doi:10.1111/j.1467-937X.2007.00426.x</a>. Why uncertainty can make firms wait.</li>
+<li>K. Handley and N. Limão, <a href="https://www.aeaweb.org/articles?id=10.1257/pol.20140068" target="_blank" rel="noopener noreferrer"><em>Trade and investment under policy uncertainty: theory and firm evidence</em></a>, American Economic Journal: Economic Policy 7(4) (2015), 189–222. How credible commitments about future trade policy affect firms.</li>
+</ol>
+</section>
+<footer>© 2026 Jeff Kline. All rights reserved.<br>This page runs entirely in your browser: it loads nothing from other sites, sends nothing anywhere, and stores nothing.</footer>
+</main>
+<script id="math-engine">
+const EconomyMath = (() => {
+    // Quarterly deviations from a steady state with a 3% policy rate and 2% inflation.
+    const P = {beta: .99, sigma: 1, kappa: .01, phiPi: 1.5, phiX: .125, rate: 3, target: 2, horizon: 60};
+    function solveLinear(A, b) {
+        const n = b.length, M = A.map((row, i) => [...row, b[i]]);
+        for (let c = 0; c < n; c++) {
+            let p = c;
+            for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+            [M[c], M[p]] = [M[p], M[c]];
+            for (let r = c + 1; r < n; r++) {
+                const f = M[r][c] / M[c][c];
+                if (f) for (let k = c; k <= n; k++) M[r][k] -= f * M[c][k];
+            }
+        }
+        const z = Array(n).fill(0);
+        for (let r = n - 1; r >= 0; r--) {
+            let s = M[r][n];
+            for (let k = r + 1; k < n; k++) s -= M[r][k] * z[k];
+            z[r] = s / M[r][r];
+        }
+        return z;
+    }
+    // A doubted promise: people plan for the usual rule, then believe the rest once it takes effect at the end of the slump.
+    function simulate(s) {
+        if (s.believed !== false || !s.promise) return solve(s);
+        const planned = solve({...s, promise: 0}), surprise = solve({...s, slump: 0, quarters: 0});
+        const join = k => [...planned[k].slice(0, s.quarters + 1), ...surprise[k].slice(1, P.horizon - s.quarters + 1)];
+        return {rate: join('rate'), output: join('output'), inflation: join('inflation')};
+    }
+    // s: {slump (points off the annual neutral rate), quarters, cut (rate held, % per year), promise (extra quarters held)}
+    function solve(s) {
+        const T = P.horizon, X = t => t - 1, Pi = t => T + t - 1, floor = -P.rate / 4;
+        const neutral = t => t >= 1 && t <= s.quarters ? -s.slump / 4 : 0;
+        const held = t => t <= s.quarters + s.promise;
+        const pegged = Math.max(floor, s.cut / 4 - P.rate / 4);
+        let bound = new Set(), z;
+        for (let pass = 0; pass < 40; pass++) {
+            const A = Array.from({length: 2 * T}, () => Array(2 * T).fill(0)), b = Array(2 * T).fill(0);
+            const add = (row, col, v) => { if (col !== null) A[row][col] += v; };
+            const at = (f, t) => t >= 1 && t <= T ? f(t) : null;
+            for (let t = 1; t <= T; t++) {
+                const is = X(t), pc = Pi(t);
+                // Spending: output today depends on expected output and the real interest rate gap.
+                add(is, X(t), 1);
+                add(is, at(X, t + 1), -1); add(is, at(Pi, t + 1), -1 / P.sigma);
+                b[is] += neutral(t) / P.sigma;
+                // Policy rate enters spending; pegged or set by the usual rule.
+                if (held(t) || bound.has(t)) b[is] -= (held(t) ? pegged : floor) / P.sigma;
+                else { add(is, X(t), P.phiX / P.sigma); add(is, Pi(t), P.phiPi / P.sigma); }
+                // Prices: inflation today depends on expected inflation and how hot the economy runs.
+                add(pc, Pi(t), 1); add(pc, X(t), -P.kappa);
+                add(pc, at(Pi, t + 1), -P.beta);
+            }
+            z = solveLinear(A, b);
+            const next = new Set();
+            for (let t = 1; t <= T; t++) if (!held(t) && P.phiPi * z[Pi(t)] + P.phiX * z[X(t)] < floor) next.add(t);
+            if (next.size === bound.size && [...next].every(t => bound.has(t))) break;
+            bound = next;
+        }
+        const out = {rate: [P.rate], output: [0], inflation: [P.target]};
+        for (let t = 1; t <= T; t++) {
+            const i = held(t) ? pegged : bound.has(t) ? floor : P.phiPi * z[Pi(t)] + P.phiX * z[X(t)];
+            out.rate.push(P.rate + 4 * i); out.output.push(z[X(t)]); out.inflation.push(P.target + 4 * z[Pi(t)]);
+        }
+        return out;
+    }
+    // Lifetime plan from age 25 to 85, no interest, borrowing allowed. direction: +1 gain, −1 loss.
+    function household(s) {
+        const ages = Array.from({length: 61}, (_, k) => 25 + k), base = a => a < 65 ? 50 : 20;
+        const amount = s.direction === -1 ? -10 : 10;
+        const extra = a => s.event === 'bonus' ? (a === 40 ? amount : 0) : s.event === 'raise' ? (a >= 40 && a < 65 ? amount : 0) : 0;
+        const income = ages.map(a => base(a) + extra(a)), news = s.event === 'none' ? 40 : 40 - s.lead;
+        // savings: the planner's balance at the end of each year.
+        let wealth = 0;
+        const savings = [];
+        const planned = ages.map((a, k) => {
+            const known = ages.slice(k).reduce((sum, b, j) => sum + base(b) + (a >= news ? extra(b) : 0), 0);
+            const c = (wealth + known) / (85 - a + 1);
+            wealth += income[k] - c;
+            savings.push(wealth);
+            return c;
+        });
+        return {ages, income, planned, paycheck: income, savings, news};
+    }
+    return {P, simulate, household, solveLinear};
+})();
+</script>
+<script>
+(() => {
+    const M = EconomyMath, $ = id => document.getElementById(id), NS = 'http://www.w3.org/2000/svg';
+    const money = v => '$' + Math.round(v * 1000).toLocaleString('en-US'), pct = v => (v <= -.05 ? '−' : '') + (Math.abs(v) < .05 ? 0 : Math.abs(v)).toFixed(1) + '%';
+    function elem(tag, attrs = {}, text) { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (text !== undefined) e.textContent = text; return e; }
+    function append(parent, tag, attrs, text) { const e = elem(tag, attrs, text); parent.append(e); return e; }
+    const steps = (values, x, y, start) => values.reduce((s, v, k) => s + (k ? ` V ${y(v)}` : `M ${x(start)} ${y(v)}`) + ` H ${x(start + k + 1)}`, '');
+    function ticks(lo, hi, count) { const raw = (hi - lo) / count, step = [1, 2, 5, 10, 20].find(s => s >= raw) || 50; return {lo: Math.floor(lo / step) * step, hi: Math.ceil(hi / step) * step, step}; }
+
+    // Show an income gain against the unchanged lifetime plan, on a fixed scale.
+    function household() {
+        const s = {event: document.querySelector('input[name=event]:checked').value, lead: +document.querySelector('input[name=lead]:checked').value};
+        const base = M.household({event: 'none', lead: 0});
+        const gain = M.household({...s, direction: 1});
+        const signedMoney = v => (v < -1e-8 ? '−' : v > 1e-8 ? '+' : '') + money(Math.abs(v));
+        const frequency = s.event === 'bonus' ? 'once' : 'a year until 65';
+        for (const [id, h, label] of [['household-chart', gain, 'gain']]) {
+            const host = $(id), w = Math.max(260, host.clientWidth), H = innerWidth <= 620 ? Math.max(160, Math.min(220, innerHeight - 420)) : 220, L = 36, R = 14, T = 34, B = 40;
+            const x = a => L + (a - 25) / 61 * (w - L - R), y = v => H - B - (v + 1) / 12 * (H - T - B);
+            const income = h.income.map((v, i) => v - base.income[i]);
+            const planned = h.planned.map((v, i) => v - base.planned[i]);
+            const change = planned[h.news - 25];
+            const svg = elem('svg', {class: 'chart', viewBox: '0 0 ' + w + ' ' + H, role: 'img', 'aria-label': '$10,000 income ' + label + ' ' + frequency + '. Planned spending changes by ' + signedMoney(change) + ' a year at age ' + h.news + '. Income changes at 40.'});
+            for (const v of [0, 5, 10]) {
+                append(svg, 'line', {x1: L, x2: w - R, y1: y(v), y2: y(v), stroke: v === 0 ? '#8b9388' : '#e1dbcf'});
+                append(svg, 'text', {x: L - 7, y: y(v) + 4, 'text-anchor': 'end'}, v > 0 ? '+' + v : v < 0 ? '−' + Math.abs(v) : '0');
+            }
+            for (const a of [25, 40, 65, 85]) append(svg, 'text', {x: x(a), y: H - B + 20, 'text-anchor': 'middle'}, a);
+            append(svg, 'text', {x: L, y: 14}, 'Change, $1,000s per year');
+            append(svg, 'text', {x: (L + w - R) / 2, y: H - 3, 'text-anchor': 'middle'}, 'Age');
+            append(svg, 'line', {x1: x(h.news), x2: x(h.news), y1: T, y2: H - B, stroke: '#26352e', 'stroke-dasharray': '2 3', opacity: .6});
+            append(svg, 'text', {x: x(h.news) + 5, y: T - 4}, 'News at ' + h.news);
+            append(svg, 'path', {d: steps(income, x, y, 25), fill: 'none', stroke: '#355f70', 'stroke-width': 2});
+            append(svg, 'path', {d: steps(planned, x, y, 25), fill: 'none', stroke: '#8f392f', 'stroke-width': 2.5});
+            host.replaceChildren(svg);
+            $(label + '-title').textContent = 'Gain: $10,000 ' + frequency;
+            $(label + '-spending').textContent = signedMoney(change) + ' a year';
+        }
+        $('household-readout').textContent = 'The planner changes spending at ' + gain.news + ', when they hear the news. ' + (s.lead ? 'At 40 the income change is already expected, so it brings no further jump in planned spending.' : 'With no warning, the planner waits until 40 to change spending.') + ' ' + (s.event === 'bonus' ? 'A one-time change is spread over all remaining years.' : 'The pay change lasts 25 years, so it has a larger effect than a one-time gain.');
+    }
+
+    // Economy: small multiples with identical time axes, stacked when space is narrow.
+    const SHOWN = 24, panels = [
+        {key: 'rate', title: 'Bank’s quoted rate, % per year', ref: 0, refLabel: 'floor', min: [0, 4]},
+        {key: 'output', title: 'Output compared with normal, %', ref: 0, refLabel: 'normal', min: [-4, 4]},
+        {key: 'inflation', title: 'Inflation, % per year', ref: 2, refLabel: 'target', min: [0, 4]}];
+    function ranges(runs) { return Object.fromEntries(panels.map(p => { const v = runs.flatMap(o => o[p.key].slice(0, SHOWN + 1)); return [p.key, ticks(Math.min(p.min[0], ...v), Math.max(p.min[1], ...v), 3)]; })); }
+    function stats(o) { const y = o.output; return {worst: Math.min(0, ...y), lost: -y.reduce((s, v) => s + Math.min(0, v), 0) / 4, boom: Math.max(0, ...y), peak: Math.max(...o.inflation)}; }
+    function economy(host, run, compare, scale, setting) {
+        const w = Math.max(280, host.clientWidth), narrow = w < 520, across = w >= 900 || (w >= 700 && innerHeight < 820);
+        const single = host.id === 'sandbox-chart' && innerWidth <= 620;
+        const visible = single ? panels.filter(p => p.key === $('sandbox-view').value) : panels;
+        const ph = single ? Math.max(100, Math.min(160, innerHeight - 570)) : across ? Math.max(90, Math.min(148, innerHeight - 560)) : 80;
+        const gap = 34, L = 38, R = narrow || across ? 46 : 60, T = 26, B = 38;
+        const panelWidth = across ? (w - 36) / 3 : w;
+        const share = {rate: .85, output: 1.4, inflation: .85}, hs = visible.map(p => across || single ? ph : Math.round(ph * share[p.key]));
+        const tops = hs.map((h, k) => T + (across ? 0 : hs.slice(0, k).reduce((s, v) => s + v + gap, 0)));
+        const H = (across ? T + ph : tops[tops.length - 1] + hs[hs.length - 1]) + B;
+        const x = q => L + (q + 2) / (SHOWN + 2) * (panelWidth - L - R);
+        const svg = elem('svg', {class: 'chart', viewBox: `0 0 ${w} ${H}`, role: 'img', 'aria-label': single ? visible[0].title + ' by quarter' : 'Interest rate, output and inflation by quarter'});
+        const bands = [[0, setting.quarters, '#dedfce', 'slump']];
+        if (setting.promise) bands.push([setting.quarters, setting.quarters + setting.promise, '#ebe8dc', setting.believed === false ? 'promise, doubted' : 'promise']);
+        visible.forEach((p, k) => {
+            const panel = append(svg, 'g', {transform: `translate(${across ? k * (panelWidth + 18) : 0},0)`});
+            const top = tops[k], h = hs[k], r = scale[p.key], y = v => top + h - (v - r.lo) / (r.hi - r.lo) * h;
+            append(panel, 'text', {x: L - 30, y: top - 12, class: 'panel-title'}, across ? {rate: 'Bank’s rate, % per year', output: 'Output vs. normal, %', inflation: 'Inflation, % per year'}[p.key] : p.title);
+            for (const [a, b, fill] of bands) append(panel, 'rect', {x: x(a), y: top, width: Math.max(0, x(Math.min(b, SHOWN)) - x(a)), height: h, fill});
+            const every = h * r.step / (r.hi - r.lo) < 16 ? 2 : 1;
+            for (let v = Math.ceil(r.lo / r.step - 1e-9) * r.step, n = 0; v <= r.hi + 1e-9; v += r.step, n++) { append(panel, 'line', {x1: L, x2: panelWidth - R, y1: y(v), y2: y(v), stroke: '#e1dbcf'}); if (n % every === 0) append(panel, 'text', {x: L - 6, y: y(v) + 4, 'text-anchor': 'end'}, v); }
+            append(panel, 'line', {x1: L, x2: panelWidth - R, y1: y(p.ref), y2: y(p.ref), stroke: '#26352e', opacity: .5});
+            append(panel, 'text', {x: panelWidth - R + 6, y: y(p.ref) + 4}, p.refLabel);
+            const series = o => [o[p.key][0], o[p.key][0], ...o[p.key].slice(1, SHOWN + 1)];
+            if (compare) append(panel, 'path', {d: steps(series(compare), x, y, -2), fill: 'none', stroke: '#6f7d68', 'stroke-width': 1.5, 'stroke-dasharray': '5 4'});
+            append(panel, 'path', {d: steps(series(run), x, y, -2), fill: 'none', stroke: '#8f392f', 'stroke-width': 2.5});
+            if (k === 0 && !narrow && (!across || panelWidth >= 300)) for (const [a, b, , label] of bands) if (b > a) append(panel, 'text', {x: x(a) + 4, y: top + 13}, label);
+            if (across || k === visible.length - 1) {
+                for (let q = 0; q <= SHOWN; q += across ? 8 : 4) append(panel, 'text', {x: x(q), y: H - B + 18, 'text-anchor': 'middle'}, q / 4);
+                append(panel, 'text', {x: (L + panelWidth - R) / 2, y: H - 3, 'text-anchor': 'middle'}, across ? 'Years since slump began' : 'Years since the slump began');
+            }
+        });
+        host.replaceChildren(svg);
+    }
+    function metrics(host, run, keys) {
+        const s = stats(run), all = {worst: ['Worst quarter', pct(s.worst)], lost: ['Output shortfall, % of a year', s.lost.toFixed(1) + '%'], boom: ['Largest boom', s.boom < .05 ? 'none' : '+' + pct(s.boom)], peak: ['Peak inflation', pct(s.peak)]};
+        host.innerHTML = keys.map(k => `<div><span>${all[k][0]}</span><strong>${all[k][1]}</strong></div>`).join('');
+    }
+
+    // Story: explicit controls keep prose and chart on the same step at every width.
+    const slump = {slump: 6, quarters: 6}, story = [
+        {name: 'Holding the rate at 3%', s: {...slump, cut: 3, promise: 0}},
+        {name: 'Cutting to zero', s: {...slump, cut: 0, promise: 0}, compare: 0},
+        {name: 'Zero, plus a one-year promise', s: {...slump, cut: 0, promise: 4}, compare: 1},
+        {name: 'Zero, plus a 2½-year promise', s: {...slump, cut: 0, promise: 10}, compare: 2},
+        {name: 'The one-year promise, doubted', s: {...slump, cut: 0, promise: 4, believed: false}, compare: 2}];
+    story.forEach(step => { step.run = M.simulate(step.s); });
+    const storyScale = ranges(story.map(step => step.run)), stepEls = [...document.querySelectorAll('.step')];
+    let active = 0;
+    function showStep(k) {
+        active = k;
+        $('scenario-choice').value = String(k);
+        const step = story[k], before = story[step.compare];
+        stepEls.forEach((e, j) => { e.hidden = j !== k; });
+        document.querySelectorAll('input[name=scenario]').forEach(b => { b.checked = +b.value === k; });
+        $('previous-step').disabled = k === 0;
+        $('next-step').disabled = k === story.length - 1;
+        $('story-series').textContent = step.name;
+        $('story-compare-name').textContent = before ? before.name : '';
+        $('story-compare').style.display = before ? '' : 'none';
+        economy($('story-chart'), step.run, before && before.run, storyScale, step.s);
+        metrics($('story-metrics'), step.run, ['worst', 'lost', 'peak']);
+    }
+    document.querySelectorAll('input[name=scenario]').forEach(b => b.addEventListener('change', () => showStep(+b.value)));
+    function moveStep(k) {
+        showStep(k);
+        (getComputedStyle($('scenario-choice').parentElement).display !== 'none' ? $('scenario-choice') : document.querySelector('input[name=scenario][value="' + k + '"]')).focus({preventScroll: true});
+        $('story-experiment').scrollIntoView({block: 'start'});
+    }
+    $('previous-step').addEventListener('click', () => moveStep(Math.max(0, active - 1)));
+    $('next-step').addEventListener('click', () => moveStep(Math.min(story.length - 1, active + 1)));
+
+    // First-screen comparison: identical current policy, different future expectations.
+    function quick() {
+        const choice = document.querySelector('input[name=quick]:checked').value;
+        const index = {none: 1, promise: 2, doubt: 4}[choice], run = story[index].run, baseline = story[1].run;
+        const host = $('quick-chart'), w = Math.max(280, host.clientWidth), H = 206, L = 38, R = 16, T = 44, B = 40, years = 4;
+        const x = q => L + q / (4 * years) * (w - L - R), y = v => H - B - (v + 6) / 10 * (H - T - B);
+        const svg = elem('svg', {class: 'chart', viewBox: `0 0 ${w} ${H}`, role: 'img', 'aria-label': `Output compared with normal over four years. ${story[index].name}. Dashed line: no extra time at zero.`});
+        append(svg, 'text', {x: L, y: 14, class: 'panel-title'}, 'Output vs. normal, % · illustrative model');
+        append(svg, 'rect', {x: x(0), y: T, width: x(6) - x(0), height: H - T - B, fill: '#dedfce'});
+        if (choice !== 'none') append(svg, 'rect', {x: x(6), y: T, width: x(10) - x(6), height: H - T - B, fill: '#ebe8dc'});
+        append(svg, 'text', {x: x(0) + 5, y: T - 8}, 'Slump');
+        if (choice !== 'none') append(svg, 'text', {x: x(6) + 5, y: T - 8}, 'Extra year');
+        for (const v of [-4, -2, 0, 2, 4]) {
+            append(svg, 'line', {x1: L, x2: w - R, y1: y(v), y2: y(v), stroke: v === 0 ? '#8b9388' : '#e1dbcf'});
+            append(svg, 'text', {x: L - 8, y: y(v) + 4, 'text-anchor': 'end'}, v);
+        }
+        const path = o => steps(o.output.slice(1, 4 * years + 1), x, y, 0);
+        append(svg, 'path', {d: path(baseline), fill: 'none', stroke: '#6f7d68', 'stroke-width': 1.5, 'stroke-dasharray': '5 4'});
+        append(svg, 'path', {d: path(run), fill: 'none', stroke: '#8f392f', 'stroke-width': 2.5});
+        for (let a = 0; a <= years; a++) append(svg, 'text', {x: x(4 * a), y: H - B + 18, 'text-anchor': 'middle'}, a);
+        append(svg, 'text', {x: (L + w - R) / 2, y: H - 3, 'text-anchor': 'middle'}, 'Years since the slump began');
+        host.replaceChildren(svg);
+        $('quick-series').textContent = {none: 'No extra time at zero', promise: 'One extra year at zero', doubt: 'Promise doubted until kept'}[choice];
+        // With no promise the selected line is the comparison line, so the legend names it once.
+        $('quick-compare').style.display = choice === 'none' ? 'none' : '';
+        metrics($('quick-metrics'), run, ['worst', 'boom']);
+        $('quick-readout').textContent = {
+            none: `At its worst, output is ${pct(-stats(run).worst)} below normal. People expect the rate to rise as soon as the slump ends, so the cut to zero only goes so far.`,
+            promise: `The worst quarter is now ${pct(-stats(run).worst)} below normal, though today’s rate hasn’t changed. What changed is what people expect about future income and inflation. A boom follows the slump.`,
+            doubt: `No relief: output is still ${pct(-stats(run).worst)} below normal at its worst. People doubt the promise until it takes effect after 18 months, so they get the boom without the earlier help.`
+        }[choice];
+    }
+    document.querySelectorAll('input[name=quick]').forEach(e => e.addEventListener('change', quick));
+    $('solver-source').textContent = $('math-engine').textContent.trim();
+
+    // Numbers quoted in the prose come from the same runs.
+    const fact = {'hold-worst': pct(-stats(story[0].run).worst), 'floor-worst': pct(-stats(story[1].run).worst), 'promise-worst': pct(-stats(story[2].run).worst), 'promise-peak': pct(stats(story[2].run).peak), 'long-boom': pct(stats(story[3].run).boom), 'long-peak': pct(stats(story[3].run).peak), 'doubt-worst': pct(-stats(story[4].run).worst)};
+    const bonus = M.household({event: 'bonus', lead: 0}), bump = bonus.planned[15] - bonus.planned[14];
+    fact.mix = '$' + (Math.round((.8 * bump + .2 * 10) * 10) * 100).toLocaleString('en-US');
+    document.querySelectorAll('[data-fact]').forEach(e => { e.textContent = fact[e.dataset.fact]; });
+
+    // Sandbox. Fixed axes cover every slider setting (output −12.7 to 20.1, inflation 0.3 to 8.2), so moving a slider never rescales the chart.
+    const sandboxScale = {rate: {lo: 0, hi: 4, step: 1}, output: {lo: -15, hi: 25, step: 10}, inflation: {lo: 0, hi: 9, step: 2}};
+    function sandbox() {
+        const s = {slump: +$('slump').value, quarters: 6, cut: +$('cut').value, promise: +$('promise').value, believed: $('believed').checked};
+        const run = M.simulate(s), base = M.simulate({...s, cut: 3, promise: 0});
+        $('slump-value').textContent = s.slump + (s.slump > 1 ? ' points' : ' point');
+        $('cut-value').textContent = s.cut.toFixed(2).replace(/\.?0+$/, '') + '%';
+        $('promise-value').textContent = s.promise ? `${s.promise} quarter${s.promise > 1 ? 's' : ''}` : 'none';
+        economy($('sandbox-chart'), run, base, sandboxScale, s);
+        metrics($('sandbox-metrics'), run, ['worst', 'lost', 'boom', 'peak']);
+    }
+    for (const id of ['slump', 'cut', 'promise']) $(id).addEventListener('input', sandbox);
+    $('believed').addEventListener('change', sandbox);
+    $('sandbox-view').addEventListener('change', sandbox);
+    $('reset').addEventListener('click', () => { $('slump').value = 6; $('cut').value = 0; $('promise').value = 4; $('believed').checked = true; sandbox(); });
+    document.querySelectorAll('input[name=event],input[name=lead]').forEach(e => e.addEventListener('change', household));
+
+    document.querySelectorAll('select[data-radio]').forEach(select => {
+        const radios = [...document.querySelectorAll('input[name="' + select.dataset.radio + '"]')];
+        select.addEventListener('change', () => {
+            const radio = radios.find(input => input.value === select.value);
+            radio.checked = true;
+            radio.dispatchEvent(new Event('change', {bubbles: true}));
+        });
+        radios.forEach(radio => radio.addEventListener('change', () => { select.value = radio.value; }));
+    });
+    // A change should be visible even if the reader has scrolled past the plot.
+    // Sliders reframe on release, never in the middle of a pointer drag.
+    function revealExperiment(workspace) {
+        const chart = workspace.querySelector('.report').getBoundingClientRect();
+        const controls = workspace.querySelector('.controls').getBoundingClientRect();
+        if (controls.bottom - chart.top <= innerHeight - 16 && (chart.top < 8 || controls.bottom > innerHeight - 8)) {
+            workspace.scrollIntoView({block: 'start'});
+        }
+    }
+    document.querySelectorAll('.experiment').forEach(workspace => {
+        workspace.addEventListener('change', () => revealExperiment(workspace));
+        workspace.addEventListener('focusin', event => {
+            if (event.target.matches('input[type=range]:focus-visible')) revealExperiment(workspace);
+        });
+    });
+    $('reset').addEventListener('click', () => revealExperiment($('sandbox-experiment')));
+    // Height changes matter too: keep plots readable while leaving room for controls.
+    window.addEventListener('resize', () => { household(); sandbox(); quick(); showStep(active); });
+    // Layout choices affect only this experiment, not its model settings or scales.
+    document.querySelectorAll('select[data-width-for]').forEach(select => {
+        select.addEventListener('change', () => {
+            $(select.dataset.widthFor).dataset.width = select.value;
+            select.closest('.chart-layout').dataset.width = select.value;
+            renderers[select.dataset.widthFor]();
+        });
+    });
+    const renderers = {'quick-experiment': quick, 'household-experiment': household, 'story-experiment': () => showStep(active), 'sandbox-experiment': sandbox};
+    const widths = new WeakMap();
+    const chartResize = new ResizeObserver(entries => {
+        for (const entry of entries) {
+            const width = entry.contentRect.width;
+            if (Math.abs(width - (widths.get(entry.target) || 0)) > .5) {
+                widths.set(entry.target, width);
+                renderers[entry.target.parentElement.id]();
+            }
+        }
+    });
+    document.querySelectorAll('.experiment > .report').forEach(report => chartResize.observe(report));
+    household(); sandbox(); quick(); showStep(0);
+})();
+</script>
+</body>
+</html>
