@@ -39,7 +39,7 @@ footer{border-top:1px solid var(--rule);padding-top:16px;color:var(--muted);font
 <main>
     <p class="eyebrow">Economics Nobel 2026 · Explored with AI</p>
     <h1>Stabilizing the economy through&nbsp;expectations</h1>
-    <p class="publication-meta">Published <time datetime="2026-10-20">October 20, 2026</time> · Updated <time datetime="2026-10-20">October 20, 2026</time> · Version 1.1</p>
+    <p class="publication-meta">Published <time datetime="2026-10-20">October 20, 2026</time> · Updated <time datetime="2026-10-20">October 20, 2026</time> · Version 1.2</p>
     <div class="prose">
         <p>A central bank can help stabilize the economy through expectations. Even when today’s interest rate can’t go any lower, a promise about what the bank will do later can raise spending now, if people believe it. That is a result of the models behind this year’s Nobel Prize in economics, awarded to Robert E. Hall and Michael Woodford. In those models it works because households and firms plan ahead, so their expectations about the future affect their spending now.</p>
         <p>I have no background in economics, and I had no intuition for why that should work. I was curious about the mechanism and wanted a plausible explanation, along with a hands-on feel for it: change the model’s settings and see what happens. This page came from working with AI to interpret the result, and it’s an exercise for me to learn a bit about the theory. The interactive charts are computed from the models, whose <a href="#model">math</a> and code are written out below; the original sources are <a href="#bib-title">at the end</a>.</p>
@@ -86,10 +86,10 @@ footer{border-top:1px solid var(--rule);padding-top:16px;color:var(--muted);font
     </section>
 
     <section class="part" aria-labelledby="hall-title">
-        <h2 id="hall-title">A raise—or a pay cut?</h2>
+        <h2 id="hall-title">A raise you know is coming</h2>
         <div class="prose">
-            <p>Suppose that at 35 you learn your pay will rise by $10,000 a year starting at 40. Would you spend more now, or wait for the money? And if the news were a pay cut of the same size, would you cut back now?</p>
-            <p>A simple way to see the idea behind Hall’s test is a planner who spreads what they expect to earn evenly over the rest of their life. For that planner the answer is the same either way: spending moves as soon as the news arrives, years before the paycheck changes, and a pay cut lowers it by as much as a raise lifts it.</p>
+            <p>Suppose that at 35 you learn your pay will rise by $10,000 a year starting at 40. Would you spend more now, or wait for the money?</p>
+            <p>A simple way to see the idea behind Hall’s test is a planner who spreads what they expect to earn evenly over the rest of their life. For that planner, spending moves as soon as the news arrives, years before the paycheck changes. A pay cut would work the same way in reverse, though people seem to respond to cuts and raises differently; <a href="#limits-title">what the model leaves out</a> covers that research.</p>
             <p>The chart below shows this for someone who, without the change, earns $50,000 a year from 25 to 64 and then $20,000 through 85. Each line is a change from that original plan: red for the planner’s spending, blue for income. Someone who spends each paycheck as it arrives would follow the blue line.</p>
         </div>
         <div class="workspace experiment" id="household-experiment" data-width="medium">
@@ -126,8 +126,8 @@ footer{border-top:1px solid var(--rule);padding-top:16px;color:var(--muted);font
             </aside>
             <div class="explanation prose">
                 <p class="readout" id="household-readout" aria-live="polite"></p>
-                <p class="model-note">Model predictions. Zero means no change from the original plan; a loss of the same size gives the mirror image.</p>
-                <p>Spending can move before income because the planner has savings. Before a known raise, the planner saves less; before a known pay cut, they save more. Someone without savings or credit may have to wait for the raise before spending more, but cutting back ahead of a loss needs no lender’s permission. Over a lifetime, each household in this example spends exactly what it earns.</p>
+                <p class="model-note">Model predictions. Zero means no change from the original plan.</p>
+                <p>Spending can move before income because the planner has savings. Before a known raise, the planner saves less. Someone without savings or credit may have to wait for the raise before spending more. Over a lifetime, each household in this example spends exactly what it earns.</p>
             </div>
         </div>
         <div class="prose">
